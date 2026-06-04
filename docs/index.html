@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RMS Titanic — Data Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --navy:       #080f1e;
+      --navy-mid:   #0e1f3a;
+      --navy-light: #152d54;
+      --gold:       #c9a84c;
+      --gold-dim:   rgba(201,168,76,0.25);
+      --gold-light: #e8d5a3;
+      --teal:       #4ec9c4;
+      --rose:       #c94c6b;
+      --text:       #dde3ef;
+      --text-dim:   #8a9ab8;
+      --card:       rgba(255,255,255,0.04);
+      --card-hover: rgba(255,255,255,0.07);
+      --border:     rgba(201,168,76,0.18);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 2.5rem;
+      background: rgba(8,15,30,0.8);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.12em;
+      text-decoration: none;
+    }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; }
+    nav a {
+      color: var(--text-dim); text-decoration: none;
+      font-size: 0.78rem; letter-spacing: 0.07em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold); }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center; position: relative; overflow: hidden;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% 100%, #0d2a5c 0%, transparent 65%),
+        radial-gradient(ellipse 80% 60% at 20% 10%, #0d1f40 0%, transparent 50%),
+        var(--navy);
+    }
+
+    /* CSS star field */
+    .stars {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        radial-gradient(1px 1px at  8% 12%, rgba(255,255,255,.9) 0%,transparent 100%),
+        radial-gradient(1px 1px at 15%  4%, rgba(255,255,255,.6) 0%,transparent 100%),
+        radial-gradient(1px 1px at 22% 28%, rgba(255,255,255,.8) 0%,transparent 100%),
+        radial-gradient(1px 1px at 30%  8%, rgba(255,255,255,.7) 0%,transparent 100%),
+        radial-gradient(1px 1px at 38% 18%, rgba(255,255,255,.5) 0%,transparent 100%),
+        radial-gradient(1px 1px at 45%  3%, rgba(255,255,255,.9) 0%,transparent 100%),
+        radial-gradient(1px 1px at 52% 22%, rgba(255,255,255,.6) 0%,transparent 100%),
+        radial-gradient(1px 1px at 60%  9%, rgba(255,255,255,.8) 0%,transparent 100%),
+        radial-gradient(1px 1px at 67% 31%, rgba(255,255,255,.5) 0%,transparent 100%),
+        radial-gradient(1px 1px at 74%  5%, rgba(255,255,255,.7) 0%,transparent 100%),
+        radial-gradient(1px 1px at 81% 16%, rgba(255,255,255,.9) 0%,transparent 100%),
+        radial-gradient(1px 1px at 88% 25%, rgba(255,255,255,.6) 0%,transparent 100%),
+        radial-gradient(1px 1px at 94%  7%, rgba(255,255,255,.8) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 12% 42%, rgba(255,255,255,.5) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 35% 38%, rgba(201,168,76,.6) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 56% 44%, rgba(255,255,255,.7) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 78% 35%, rgba(255,255,255,.5) 0%,transparent 100%),
+        radial-gradient(1px 1px at  5% 55%, rgba(255,255,255,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,.5) 0%,transparent 100%),
+        radial-gradient(1px 1px at 48% 52%, rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 70% 48%, rgba(255,255,255,.6) 0%,transparent 100%),
+        radial-gradient(1px 1px at 92% 56%, rgba(255,255,255,.4) 0%,transparent 100%);
+      animation: twinkle 8s ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      0%   { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+
+    .hero-fade {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 220px;
+      background: linear-gradient(to bottom, transparent, var(--navy));
+    }
+
+    .hero-content {
+      position: relative; z-index: 1;
+      padding: 2rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: rise 0.9s 0.4s forwards;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: rise 0.9s 0.7s forwards;
+    }
+    .hero-title em { color: var(--gold); font-style: italic; }
+    .hero-sub {
+      max-width: 560px; margin: 0 auto 3.5rem;
+      font-size: 1.05rem; color: var(--text-dim); line-height: 1.8;
+      opacity: 0; animation: rise 0.9s 1s forwards;
+    }
+    .hero-stats {
+      display: flex; gap: 3.5rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: rise 0.9s 1.3s forwards;
+    }
+    .hero-stat { text-align: center; }
+    .h-num {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem; color: var(--gold); line-height: 1;
+    }
+    .h-label {
+      display: block; margin-top: 0.4rem;
+      font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-dim);
+    }
+
+    .scroll-cue {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      color: var(--text-dim); font-size: 0.7rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      opacity: 0; animation: fadeIn 1s 2.2s forwards;
+    }
+    .scroll-cue::after {
+      content: '';
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: pulse-line 2s ease-in-out infinite;
+    }
+    @keyframes pulse-line {
+      0%,100% { opacity: 0.4; transform: scaleY(0.8); }
+      50%      { opacity: 1;   transform: scaleY(1); }
+    }
+
+    /* ─── SHARED LAYOUT ───────────────────────────────── */
+    .band { width: 100%; }
+    .band--mid  { background: var(--navy-mid); }
+    .band--dark { background: var(--navy); }
+
+    .inner {
+      max-width: 1080px; margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .label {
+      font-size: 0.72rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 4vw, 2.9rem);
+      font-weight: 700; line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .rule {
+      width: 52px; height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin: 1.4rem 0 1.8rem;
+    }
+    p { color: var(--text-dim); max-width: 68ch; margin-bottom: 1rem; }
+    p:last-of-type { margin-bottom: 0; }
+
+    /* ─── SPEC GRID ───────────────────────────────────── */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.2rem; margin-top: 3rem;
+    }
+    .spec-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px; padding: 1.5rem 1.4rem;
+      transition: transform 0.28s, border-color 0.28s, background 0.28s;
+    }
+    .spec-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+      background: var(--card-hover);
+    }
+    .spec-val {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem; color: var(--gold);
+      line-height: 1; margin-bottom: 0.45rem;
+    }
+    .spec-lbl {
+      font-size: 0.75rem; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--text-dim);
+    }
+
+    /* ─── TIMELINE ────────────────────────────────────── */
+    .timeline {
+      position: relative; padding-left: 2rem; margin-top: 3rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 6px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold) 0%, transparent 100%);
+    }
+    .tl-item {
+      position: relative; padding: 0 0 2.8rem 2rem;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute; left: -4.5px; top: 5px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--navy-mid);
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 12px rgba(201,168,76,0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tl-item:hover::before {
+      transform: scale(1.4);
+      box-shadow: 0 0 20px rgba(201,168,76,0.7);
+    }
+    .tl-time {
+      font-size: 0.75rem; letter-spacing: 0.1em;
+      color: var(--gold); margin-bottom: 0.2rem;
+    }
+    .tl-event {
+      font-size: 1rem; font-weight: 500;
+      color: var(--text); margin-bottom: 0.3rem;
+    }
+    .tl-detail { font-size: 0.88rem; color: var(--text-dim); max-width: 62ch; }
+
+    /* ─── STAT CARDS ──────────────────────────────────── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1.4rem; margin-top: 3rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem 1.8rem;
+      text-align: center;
+      transition: transform 0.28s, box-shadow 0.28s, border-color 0.28s;
+    }
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.35);
+      border-color: rgba(201,168,76,0.4);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 700;
+      color: var(--gold); line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+    .stat-lbl {
+      font-size: 0.78rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-dim);
+    }
+
+    /* ─── INSIGHT CALLOUT ─────────────────────────────── */
+    .insight {
+      margin: 2.5rem 0;
+      padding: 1.6rem 2rem;
+      background: var(--gold-dim);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+    }
+    .insight p {
+      color: var(--gold-light);
+      font-size: 0.95rem; max-width: none; margin: 0;
+    }
+    .insight strong { color: var(--gold); }
+
+    /* ─── CHARTS ──────────────────────────────────────── */
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.8rem; margin-top: 3rem;
+    }
+    .chart-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.8rem;
+      transition: border-color 0.3s;
+    }
+    .chart-card:hover { border-color: rgba(201,168,76,0.4); }
+    .chart-title {
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--gold);
+      margin-bottom: 1.4rem;
+    }
+    canvas { max-height: 260px; }
+
+    /* ─── MISSING DATA BAR ────────────────────────────── */
+    .missing-grid {
+      display: flex; flex-direction: column;
+      gap: 1rem; margin-top: 2.5rem;
+    }
+    .missing-row { display: flex; flex-direction: column; gap: 0.35rem; }
+    .missing-meta {
+      display: flex; justify-content: space-between;
+      font-size: 0.82rem;
+    }
+    .missing-feature { color: var(--text); }
+    .missing-pct { color: var(--text-dim); }
+    .bar-track {
+      height: 6px; background: rgba(255,255,255,0.07);
+      border-radius: 99px; overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%; border-radius: 99px;
+      background: linear-gradient(to right, var(--gold), #e8a84c);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1s ease;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--border);
+      text-align: center; padding: 3rem 2rem;
+      color: var(--text-dim); font-size: 0.82rem; line-height: 1.9;
+    }
+    footer strong { color: var(--gold-light); }
+
+    /* ─── REVEAL ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* stagger children */
+    .reveal-stagger > * {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal-stagger.visible > *:nth-child(1) { opacity:1;transform:none;transition-delay:0s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity:1;transform:none;transition-delay:.1s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity:1;transform:none;transition-delay:.2s; }
+    .reveal-stagger.visible > *:nth-child(4) { opacity:1;transform:none;transition-delay:.3s; }
+    .reveal-stagger.visible > *:nth-child(5) { opacity:1;transform:none;transition-delay:.4s; }
+    .reveal-stagger.visible > *:nth-child(6) { opacity:1;transform:none;transition-delay:.5s; }
+
+    /* ─── KEYFRAMES ───────────────────────────────────── */
+    @keyframes rise {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity:0.55; }
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 640px) {
+      nav ul { display: none; }
+      .hero-stats { gap: 2rem; }
+      .h-num { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ░░ NAV ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<nav>
+  <a class="nav-logo" href="#hero">RMS Titanic</a>
+  <ul>
+    <li><a href="#ship">The Ship</a></li>
+    <li><a href="#night">The Night</a></li>
+    <li><a href="#eda">The Data</a></li>
+    <li><a href="#patterns">Patterns</a></li>
+  </ul>
+</nav>
+
+<!-- ░░ HERO ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<section id="hero" style="padding:0; max-width:none; margin:0;">
+  <div class="stars"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">April 10 – 15, 1912 &nbsp;·&nbsp; North Atlantic</p>
+    <h1 class="hero-title">RMS <em>Titanic</em></h1>
+    <p class="hero-sub">
+      She was the largest ship ever built — branded unsinkable, bound for New York.
+      On her maiden voyage she met an iceberg, and changed history in 160 minutes.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="h-num" data-count="2224">0</span>
+        <span class="h-label">Souls aboard</span>
+      </div>
+      <div class="hero-stat">
+        <span class="h-num" data-count="1517">0</span>
+        <span class="h-label">Lives lost</span>
+      </div>
+      <div class="hero-stat">
+        <span class="h-num" data-count="710">0</span>
+        <span class="h-label">Survivors</span>
+      </div>
+      <div class="hero-stat">
+        <span class="h-num" data-count="160">0</span>
+        <span class="h-label">Minutes to sink</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+  <div class="hero-fade"></div>
+</section>
+
+<!-- ░░ THE SHIP ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<div class="band band--dark" id="ship">
+  <div class="inner reveal">
+    <p class="label">The Vessel</p>
+    <h2>Built to Last Forever</h2>
+    <div class="rule"></div>
+    <p>
+      RMS Titanic was the second of three Olympic-class ocean liners built by Harland and Wolff
+      in Belfast for the White Star Line. At the time of her launch in 1911, she was the largest
+      moving object ever built by human hands — a floating palace with a swimming pool, Turkish bath,
+      and a first-class dining room that seated 554 guests.
+    </p>
+    <p>
+      Her hull was divided into 16 watertight compartments. Naval architects assured she could stay
+      afloat with any four flooded. The iceberg opened five. Her fate was mathematically sealed
+      within the first hour.
+    </p>
+    <div class="spec-grid reveal-stagger">
+      <div class="spec-card">
+        <span class="spec-val">882 ft</span>
+        <span class="spec-lbl">Length (269 m)</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">46,328</span>
+        <span class="spec-lbl">Gross tonnage</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">21 kn</span>
+        <span class="spec-lbl">Service speed</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">£1.5M</span>
+        <span class="spec-lbl">Cost in 1912</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">3,327</span>
+        <span class="spec-lbl">Max capacity</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">20</span>
+        <span class="spec-lbl">Lifeboats (for ~1,178)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ THE NIGHT ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<div class="band band--mid" id="night">
+  <div class="inner">
+    <p class="label reveal">The Night</p>
+    <h2 class="reveal">160 Minutes to the Bottom</h2>
+    <div class="rule reveal"></div>
+    <p class="reveal">
+      April 14, 1912. The North Atlantic was unusually calm — ironically the worst condition for
+      spotting icebergs, as waves breaking at their base would normally reveal them. Six iceberg
+      warnings had been received by radio that day. Captain Smith kept full speed.
+    </p>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-time">April 14 &nbsp;·&nbsp; 11:40 PM</div>
+        <div class="tl-event">Iceberg sighted</div>
+        <div class="tl-detail">Lookout Frederick Fleet rings three bells — "Iceberg, right ahead!" First Officer Murdoch orders hard-a-starboard. The ship begins to turn, but at 21 knots she needs more than half a mile to stop. She doesn't have it.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 14 &nbsp;·&nbsp; 11:50 PM</div>
+        <div class="tl-event">The damage is assessed</div>
+        <div class="tl-detail">Architect Thomas Andrews inspects the lower decks. Five watertight compartments are breached — one more than she can survive with. He tells Captain Smith: she has at most two hours.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 12:05 AM</div>
+        <div class="tl-event">Lifeboats ordered uncovered</div>
+        <div class="tl-detail">Captain Smith orders the crew to prepare lifeboats. There are 20 — enough for 1,178 people. There are 2,224 on board. No one yet believes the ship is truly sinking.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 12:15 AM</div>
+        <div class="tl-event">Distress signals sent</div>
+        <div class="tl-detail">Radio operators Bride and Phillips transmit CQD then SOS. The Carpathia, 58 miles south-east, turns around at full speed. She will arrive in 90 minutes — 10 minutes too late for most.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 12:45 AM</div>
+        <div class="tl-event">First lifeboat lowered</div>
+        <div class="tl-detail">Lifeboat 7 leaves with 28 of its 65 capacity. Passengers refuse to leave the warm, brightly-lit ship for a dark ocean. This pattern repeats for the next 80 minutes.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 2:20 AM</div>
+        <div class="tl-event">Titanic sinks</div>
+        <div class="tl-detail">The stern rises high, the lights go dark, and the ship disappears beneath the surface. Over 1,500 people are in the 28 °F (−2 °C) water. Most will lose consciousness within minutes.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 4:10 AM</div>
+        <div class="tl-event">Carpathia arrives</div>
+        <div class="tl-detail">RMS Carpathia reaches the lifeboats. 710 survivors are rescued. The search continues until it becomes clear there are none left to find.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ THE DATASET ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<div class="band band--dark" id="eda">
+  <div class="inner">
+    <p class="label reveal">Exploratory Data Analysis</p>
+    <h2 class="reveal">891 Stories, One Dataset</h2>
+    <div class="rule reveal"></div>
+    <p class="reveal">
+      The Kaggle Titanic dataset contains records for 891 of the ~2,224 aboard — a curated subset
+      of the ship's manifest, augmented with ticket prices, cabin numbers, and family information.
+      Each row is a person. The target column, <code style="color:var(--gold);font-size:0.9em">Survived</code>,
+      tells us whether they made it.
+    </p>
+    <p class="reveal">
+      Before building any model, EDA reveals the patterns hiding in the data — and often identifies
+      the most predictive features before a single line of modelling code is written.
+    </p>
+
+    <div class="stat-grid reveal-stagger">
+      <div class="stat-card">
+        <div class="stat-num" data-count="891" data-suffix="">0</div>
+        <div class="stat-lbl">Passengers (training set)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="38" data-suffix="%">0</div>
+        <div class="stat-lbl">Overall survival rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="12" data-suffix="">0</div>
+        <div class="stat-lbl">Features per passenger</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="177" data-suffix="">0</div>
+        <div class="stat-lbl">Missing age values (20%)</div>
+      </div>
+    </div>
+
+    <!-- missing data bars -->
+    <div style="margin-top:3.5rem" class="reveal">
+      <p class="label">Data quality</p>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:0.5rem;">Missing values by feature</h3>
+      <div class="missing-grid" id="missing-bars">
+        <div class="missing-row">
+          <div class="missing-meta">
+            <span class="missing-feature">Cabin</span>
+            <span class="missing-pct">77.1% missing — 687 of 891</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-w="0.771"></div></div>
+        </div>
+        <div class="missing-row">
+          <div class="missing-meta">
+            <span class="missing-feature">Age</span>
+            <span class="missing-pct">19.9% missing — 177 of 891</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-w="0.199"></div></div>
+        </div>
+        <div class="missing-row">
+          <div class="missing-meta">
+            <span class="missing-feature">Embarked</span>
+            <span class="missing-pct">0.2% missing — 2 of 891</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-w="0.002"></div></div>
+        </div>
+        <div class="missing-row">
+          <div class="missing-meta">
+            <span class="missing-feature">All other features</span>
+            <span class="missing-pct">Complete — 0 missing</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-w="0"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ PATTERNS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<div class="band band--mid" id="patterns">
+  <div class="inner">
+    <p class="label reveal">What the data reveals</p>
+    <h2 class="reveal">Survival Was Not Random</h2>
+    <div class="rule reveal"></div>
+    <p class="reveal">
+      Three factors dominate survival in this dataset: <strong style="color:var(--text)">sex</strong>,
+      <strong style="color:var(--text)">ticket class</strong>, and <strong style="color:var(--text)">age</strong>.
+      The "women and children first" maritime tradition was real — and the class divide was stark.
+    </p>
+
+    <div class="insight reveal">
+      <p>
+        <strong>The starkest finding:</strong> a first-class woman had a <strong>96.8%</strong> chance of
+        survival. A third-class man had a <strong>13.5%</strong> chance. Same ship, same iceberg — a
+        sevenfold difference explained almost entirely by two categorical variables.
+      </p>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card reveal">
+        <div class="chart-title">Overall — survived vs. lost</div>
+        <canvas id="cOverall"></canvas>
+      </div>
+      <div class="chart-card reveal">
+        <div class="chart-title">Survival rate by gender</div>
+        <canvas id="cGender"></canvas>
+      </div>
+      <div class="chart-card reveal">
+        <div class="chart-title">Survival rate by ticket class</div>
+        <canvas id="cClass"></canvas>
+      </div>
+      <div class="chart-card reveal">
+        <div class="chart-title">Class × gender interaction</div>
+        <canvas id="cMatrix"></canvas>
+      </div>
+      <div class="chart-card reveal">
+        <div class="chart-title">Survival rate by age group</div>
+        <canvas id="cAge"></canvas>
+      </div>
+      <div class="chart-card reveal">
+        <div class="chart-title">Survival rate by embarkation port</div>
+        <canvas id="cEmbarked"></canvas>
+      </div>
+    </div>
+
+    <div class="insight reveal" style="margin-top:2.5rem;">
+      <p>
+        <strong>On the embarkation chart:</strong> Cherbourg passengers survived at a higher rate (55%)
+        not because of any luck related to the port — but because more wealthy first-class passengers
+        boarded there. Port of embarkation is a <em>proxy</em> for class, not a cause.
+        This is the kind of confounding that EDA teaches you to spot before modelling.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ FOOTER ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<footer>
+  <p>
+    EDA figures derived from <strong>891 training records</strong> in the
+    <strong>Kaggle Titanic Competition</strong> dataset.
+  </p>
+  <p>
+    Historical facts: <strong>Encyclopedia Titanica</strong> ·
+    British Board of Trade Inquiry (1912) ·
+    National Archives (UK).
+  </p>
+  <p style="margin-top:1rem;font-size:0.72rem;opacity:0.5;">
+    Part of a Kaggle learning project · Built with Chart.js
+  </p>
+</footer>
+
+<!-- ░░ SCRIPTS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<script>
+/* ── Reveal on scroll ────────────────────────────────── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+/* ── Counter animation ───────────────────────────────── */
+function runCounter(el) {
+  const target = +el.dataset.count;
+  const suffix = el.dataset.suffix || '';
+  const dur = 1800;
+  const t0 = performance.now();
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(eased * target).toLocaleString() + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  })(t0);
+}
+const cio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(runCounter);
+      cio.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.hero-stats, .stat-grid').forEach(el => cio.observe(el));
+
+/* ── Missing data bars ───────────────────────────────── */
+const bio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.bar-fill').forEach(bar => {
+        bar.style.transform = `scaleX(${bar.dataset.w})`;
+      });
+      bio.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const mb = document.getElementById('missing-bars');
+if (mb) bio.observe(mb);
+
+/* ── Chart.js global defaults ────────────────────────── */
+Chart.defaults.color = '#8a9ab8';
+Chart.defaults.font.family = 'Inter';
+Chart.defaults.plugins.legend.labels.boxWidth = 12;
+
+const GOLD  = '#c9a84c';
+const TEAL  = '#4ec9c4';
+const ROSE  = '#c94c6b';
+const DIMS  = 'rgba(255,255,255,0.04)';
+const GRID  = 'rgba(255,255,255,0.06)';
+
+function pctAxis(axis) {
+  return { max: 100, ticks: { callback: v => v + '%' }, grid: { color: GRID } };
+}
+function hiddenAxis() {
+  return { grid: { display: false } };
+}
+
+/* ── Chart 1: Overall ────────────────────────────────── */
+new Chart('cOverall', {
+  type: 'doughnut',
+  data: {
+    labels: ['Did not survive (61.6%)', 'Survived (38.4%)'],
+    datasets: [{
+      data: [549, 342],
+      backgroundColor: ['rgba(201,76,107,0.75)', 'rgba(78,201,196,0.75)'],
+      borderColor: [ROSE, TEAL],
+      borderWidth: 1.5,
+      hoverOffset: 8,
+    }]
+  },
+  options: {
+    cutout: '68%',
+    plugins: {
+      legend: { position: 'bottom', labels: { padding: 16 } },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.raw} passengers` } }
+    }
+  }
+});
+
+/* ── Chart 2: Gender ─────────────────────────────────── */
+new Chart('cGender', {
+  type: 'bar',
+  data: {
+    labels: ['Female', 'Male'],
+    datasets: [{
+      data: [74.2, 18.9],
+      backgroundColor: ['rgba(78,201,196,0.7)', 'rgba(201,168,76,0.7)'],
+      borderColor: [TEAL, GOLD],
+      borderWidth: 1.5, borderRadius: 6,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: { x: pctAxis(), y: hiddenAxis() }
+  }
+});
+
+/* ── Chart 3: Class ──────────────────────────────────── */
+new Chart('cClass', {
+  type: 'bar',
+  data: {
+    labels: ['1st Class', '2nd Class', '3rd Class'],
+    datasets: [{
+      data: [63.0, 47.3, 24.2],
+      backgroundColor: ['rgba(78,201,196,0.7)', 'rgba(201,168,76,0.7)', 'rgba(201,76,107,0.7)'],
+      borderColor: [TEAL, GOLD, ROSE],
+      borderWidth: 1.5, borderRadius: 6,
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: { y: pctAxis(), x: hiddenAxis() }
+  }
+});
+
+/* ── Chart 4: Class × Gender ─────────────────────────── */
+new Chart('cMatrix', {
+  type: 'bar',
+  data: {
+    labels: ['1st Class', '2nd Class', '3rd Class'],
+    datasets: [
+      {
+        label: 'Female',
+        data: [96.8, 92.1, 50.0],
+        backgroundColor: 'rgba(78,201,196,0.7)',
+        borderColor: TEAL, borderWidth: 1.5, borderRadius: 4,
+      },
+      {
+        label: 'Male',
+        data: [36.9, 15.7, 13.5],
+        backgroundColor: 'rgba(201,168,76,0.65)',
+        borderColor: GOLD, borderWidth: 1.5, borderRadius: 4,
+      }
+    ]
+  },
+  options: {
+    plugins: { legend: { position: 'bottom' } },
+    scales: { y: pctAxis(), x: hiddenAxis() }
+  }
+});
+
+/* ── Chart 5: Age buckets ────────────────────────────── */
+new Chart('cAge', {
+  type: 'bar',
+  data: {
+    labels: ['0–10', '11–18', '19–30', '31–45', '46–60', '61+'],
+    datasets: [{
+      label: 'Survival rate',
+      data: [59.4, 42.7, 35.6, 42.6, 40.7, 22.7],
+      backgroundColor: 'rgba(201,168,76,0.65)',
+      borderColor: GOLD, borderWidth: 1.5, borderRadius: 4,
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: { y: pctAxis(), x: hiddenAxis() }
+  }
+});
+
+/* ── Chart 6: Embarked ───────────────────────────────── */
+new Chart('cEmbarked', {
+  type: 'bar',
+  data: {
+    labels: ['Cherbourg (C)', 'Queenstown (Q)', 'Southampton (S)'],
+    datasets: [{
+      data: [55.4, 39.0, 33.7],
+      backgroundColor: ['rgba(78,201,196,0.7)', 'rgba(201,168,76,0.7)', 'rgba(201,76,107,0.7)'],
+      borderColor: [TEAL, GOLD, ROSE],
+      borderWidth: 1.5, borderRadius: 4,
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: { y: pctAxis(), x: hiddenAxis() }
+  }
+});
+</script>
+</body>
+</html>
