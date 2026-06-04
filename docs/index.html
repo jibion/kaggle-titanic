@@ -209,6 +209,35 @@
     .band--dark { background: var(--navy); }
     .bg-art { position: absolute; inset: 0; pointer-events: none; user-select: none; }
 
+    /* ─── UNDERWATER SECTION ──────────────────────────────── */
+    #patterns {
+      background:
+        radial-gradient(ellipse 80% 40% at 50% 20%, rgba(4,18,40,0.0) 0%, rgba(2,8,18,0.9) 100%),
+        radial-gradient(ellipse 100% 60% at 30% 80%, rgba(0,30,50,0.4) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 70% 60%, rgba(0,20,40,0.3) 0%, transparent 60%),
+        linear-gradient(180deg,
+          #020810 0%,
+          #040f20 15%,
+          #061528 40%,
+          #071a30 60%,
+          #040e1e 85%,
+          #020810 100%);
+    }
+
+    /* floating underwater elements */
+    .sea-float {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      will-change: transform;
+      transition: transform 0.05s linear;
+      z-index: 1;
+    }
+    .sea-float img {
+      display: block;
+      mix-blend-mode: screen;
+    }
+
     /* mask fades directly on the image — edges dissolve into section bg */
     img[src^="assets/"] {
       -webkit-mask-image:
@@ -224,6 +253,7 @@
     .inner {
       max-width: 1080px; margin: 0 auto;
       padding: 6rem 2rem;
+      position: relative; z-index: 2;
     }
 
     .label {
@@ -707,129 +737,52 @@
 </div>
 
 <!-- ░░ PATTERNS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
-<div class="band band--mid" id="patterns">
+<div class="band" id="patterns">
 
-  <!-- ░ Underwater life ░ -->
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice"
-       aria-hidden="true"
-       style="position:absolute;inset:0;width:100%;height:100%;opacity:0.07;">
-    <g stroke="#4ec9c4" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <!-- SEAWEED clusters -->
-      <!-- Cluster 1 left -->
-      <path d="M55 700 Q48 660 58 628 Q68 596 56 562 Q44 528 58 494 Q70 462 55 428" stroke-width="2.5"/>
-      <path d="M55 700 Q65 663 58 632 Q51 601 64 570 Q76 539 62 506 Q50 475 66 442" stroke-width="2"/>
-      <path d="M55 700 Q40 668 46 640 Q52 612 40 584 Q28 556 44 524" stroke-width="1.5"/>
-      <!-- Cluster 2 -->
-      <path d="M160 700 Q153 655 163 618 Q172 582 158 544 Q144 508 160 470" stroke-width="2.5"/>
-      <path d="M160 700 Q172 658 165 622 Q158 586 172 550 Q184 514 168 478" stroke-width="2"/>
-      <path d="M160 700 Q145 664 152 632 Q158 600 144 568" stroke-width="1.5"/>
-      <!-- Cluster 3 mid-left -->
-      <path d="M380 700 Q372 652 384 612 Q394 574 378 534 Q362 496 380 456" stroke-width="2.5"/>
-      <path d="M380 700 Q394 655 386 618 Q378 580 394 542 Q408 506 390 466" stroke-width="2"/>
-      <!-- Cluster 4 mid -->
-      <path d="M680 700 Q672 648 684 606 Q694 566 678 524 Q662 484 680 442" stroke-width="2.5"/>
-      <path d="M680 700 Q695 652 688 615 Q680 576 696 538 Q710 500 692 460" stroke-width="2"/>
-      <path d="M680 700 Q664 654 671 620 Q678 586 662 550" stroke-width="1.5"/>
-      <!-- Cluster 5 right -->
-      <path d="M980 700 Q972 650 984 610 Q994 572 978 530 Q962 490 980 450" stroke-width="2.5"/>
-      <path d="M980 700 Q994 654 988 618 Q980 580 996 542 Q1010 506 992 464" stroke-width="2"/>
-      <!-- Cluster 6 far right -->
-      <path d="M1280 700 Q1272 658 1284 622 Q1294 586 1278 550 Q1262 514 1280 478" stroke-width="2.5"/>
-      <path d="M1280 700 Q1295 662 1288 626 Q1280 590 1296 554 Q1310 518 1292 482" stroke-width="2"/>
-      <path d="M1280 700 Q1264 663 1272 632 Q1278 600 1262 568" stroke-width="1.5"/>
-      <!-- Cluster 7 -->
-      <path d="M1360 700 Q1355 660 1365 628 Q1374 596 1362 564" stroke-width="2"/>
-      <path d="M1360 700 Q1370 658 1364 626 Q1357 596 1368 562" stroke-width="1.5"/>
 
-      <!-- CORAL structures -->
-      <!-- Coral 1 -->
-      <path d="M240 700 L242 660 L236 640 L242 620 L238 600 L244 575" stroke-width="2"/>
-      <path d="M238 640 L224 625 L218 610" stroke-width="1.5"/>
-      <path d="M238 640 L254 625 L260 608" stroke-width="1.5"/>
-      <path d="M242 600 L228 582 L222 565" stroke-width="1.5"/>
-      <path d="M242 600 L258 582 L264 566" stroke-width="1.5"/>
-      <path d="M244 575 L234 558" stroke-width="1.5"/>
-      <path d="M244 575 L256 558" stroke-width="1.5"/>
-      <!-- Coral 2 -->
-      <path d="M820 700 L824 658 L818 636 L824 612 L820 588 L826 560" stroke-width="2"/>
-      <path d="M818 636 L804 618 L796 600" stroke-width="1.5"/>
-      <path d="M818 636 L836 618 L844 600" stroke-width="1.5"/>
-      <path d="M820 588 L806 570" stroke-width="1.5"/>
-      <path d="M820 588 L836 570" stroke-width="1.5"/>
-      <!-- Coral 3 -->
-      <path d="M1140 700 L1142 652 L1136 628 L1142 602" stroke-width="2"/>
-      <path d="M1136 628 L1122 610 L1116 595" stroke-width="1.5"/>
-      <path d="M1136 628 L1152 610 L1158 594" stroke-width="1.5"/>
+  <!-- ░░ FLOATING UNDERWATER ELEMENTS (parallax) ░░ -->
 
-      <!-- FISH - various sizes and positions -->
-      <!-- Fish 1 — large, left area -->
-      <path d="M280 320 Q330 306 368 320 Q330 334 280 320 Z" stroke-width="1.8"/>
-      <path d="M280 320 L255 305 L255 335 Z" stroke-width="1.5"/>
-      <circle cx="355" cy="317" r="4" stroke-width="1.2"/>
-      <path d="M295 312 Q308 318 295 325" stroke-width="0.8" opacity="0.7"/>
-      <!-- Fish 2 — medium, swimming right -->
-      <path d="M520 180 Q556 170 584 180 Q556 190 520 180 Z" stroke-width="1.5"/>
-      <path d="M520 180 L500 170 L500 190 Z" stroke-width="1.3"/>
-      <circle cx="574" cy="178" r="3" stroke-width="1"/>
-      <!-- Fish 3 — small, upper right -->
-      <path d="M920 120 Q946 113 964 120 Q946 127 920 120 Z" stroke-width="1.3"/>
-      <path d="M920 120 L904 113 L904 127 Z" stroke-width="1.2"/>
-      <circle cx="957" cy="118" r="2.5" stroke-width="1"/>
-      <!-- Fish 4 — large, right side swimming left -->
-      <path d="M1080 400 Q1036 386 1002 400 Q1036 414 1080 400 Z" stroke-width="1.8"/>
-      <path d="M1080 400 L1102 388 L1102 412 Z" stroke-width="1.5"/>
-      <circle cx="1014" cy="397" r="4" stroke-width="1.2"/>
-      <path d="M1065 392 Q1052 398 1065 406" stroke-width="0.8" opacity="0.7"/>
-      <!-- Fish 5 — tiny school (3 fish) -->
-      <path d="M740 260 Q756 255 768 260 Q756 265 740 260 Z" stroke-width="1.1"/>
-      <path d="M740 260 L729 255 L729 265 Z" stroke-width="1"/>
-      <path d="M758 245 Q774 240 786 245 Q774 250 758 245 Z" stroke-width="1.1"/>
-      <path d="M758 245 L747 240 L747 250 Z" stroke-width="1"/>
-      <path d="M748 272 Q764 267 776 272 Q764 277 748 272 Z" stroke-width="1.1"/>
-      <path d="M748 272 L737 267 L737 277 Z" stroke-width="1"/>
-      <!-- Fish 6 — medium, lower left -->
-      <path d="M140 520 Q172 511 196 520 Q172 529 140 520 Z" stroke-width="1.5"/>
-      <path d="M140 520 L122 512 L122 528 Z" stroke-width="1.3"/>
-      <circle cx="188" cy="517" r="3" stroke-width="1"/>
-      <!-- Fish 7 — small, upper left -->
-      <path d="M400 150 Q424 143 440 150 Q424 157 400 150 Z" stroke-width="1.3"/>
-      <path d="M400 150 L385 143 L385 157 Z" stroke-width="1.2"/>
-      <circle cx="433" cy="148" r="2.5" stroke-width="1"/>
-      <!-- Fish 8 — jellyfish style (round + tentacles) -->
-      <path d="M1200 300 Q1228 285 1256 300 Q1240 320 1200 300 Z" stroke-width="1.5"/>
-      <path d="M1210 315 Q1208 330 1212 345" stroke-width="1"/>
-      <path d="M1220 318 Q1220 334 1220 350" stroke-width="1"/>
-      <path d="M1230 318 Q1232 334 1228 350" stroke-width="1"/>
-      <path d="M1242 315 Q1246 330 1240 346" stroke-width="1"/>
+  <!-- Sinking figure — large background layer, behind everything -->
+  <div class="sea-float" data-speed="0.08"
+       style="left:0%;top:2%;width:45%;max-width:700px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.3">
+    <img src="assets/uw-figure.png" alt="" style="width:100%;transform:scaleX(-1);
+         filter:brightness(0.38) contrast(0.9) blur(0.1px);">
+  </div>
 
-      <!-- ANCHOR CHAIN descending from top (suggestion of Titanic above) -->
-      <path d="M700 0 Q698 50 702 100 Q698 150 702 200 Q698 250 702 300 Q698 350 702 400" stroke-width="1.5" stroke-dasharray="8 4"/>
-      <!-- Chain links detail -->
-      <ellipse cx="700" cy="80" rx="8" ry="5" stroke-width="1"/>
-      <ellipse cx="700" cy="160" rx="8" ry="5" stroke-width="1"/>
-      <ellipse cx="700" cy="240" rx="8" ry="5" stroke-width="1"/>
-      <ellipse cx="700" cy="320" rx="8" ry="5" stroke-width="1"/>
+  <!-- Large fish — left side, below figure -->
+  <div class="sea-float" data-speed="0.18"
+       style="left:1%;top:22%;width:220px;opacity:0;transition:opacity 0.5s;">
+    <img src="assets/uw-fish-large.png" alt="" style="width:100%;
+         filter:brightness(0.45) contrast(0.8) blur(0.3px);">
+  </div>
 
-      <!-- BUBBLES rising -->
-      <circle cx="120" cy="380" r="7" stroke-width="1"/>
-      <circle cx="128" cy="354" r="5" stroke-width="1"/>
-      <circle cx="115" cy="330" r="4" stroke-width="1"/>
-      <circle cx="124" cy="308" r="3" stroke-width="0.9"/>
-      <circle cx="118" cy="290" r="2" stroke-width="0.8"/>
-      <circle cx="860" cy="420" r="6" stroke-width="1"/>
-      <circle cx="868" cy="396" r="4" stroke-width="1"/>
-      <circle cx="856" cy="374" r="3" stroke-width="0.9"/>
-      <circle cx="864" cy="356" r="2" stroke-width="0.8"/>
-      <circle cx="460" cy="500" r="5" stroke-width="1"/>
-      <circle cx="468" cy="478" r="3.5" stroke-width="1"/>
-      <circle cx="455" cy="460" r="2.5" stroke-width="0.8"/>
+  <!-- Debris — right side, background layer above small fish -->
+  <div class="sea-float" data-speed="0.08"
+       style="right:0%;top:2%;width:36%;max-width:580px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.18">
+    <img src="assets/uw-debris.png" alt="" style="width:100%;
+         filter:brightness(0.22) contrast(0.7) blur(1.8px);">
+  </div>
 
-      <!-- DEEP SEA atmospheric depth lines (very faint horizontal) -->
-      <line x1="0" y1="100" x2="1400" y2="100" stroke-width="0.5" stroke-dasharray="3 12" opacity="0.3"/>
-      <line x1="0" y1="250" x2="1400" y2="250" stroke-width="0.5" stroke-dasharray="3 14" opacity="0.25"/>
-      <line x1="0" y1="450" x2="1400" y2="450" stroke-width="0.5" stroke-dasharray="3 10" opacity="0.2"/>
-    </g>
-  </svg>
+  <!-- Jellyfish — left side, behind drowning figure -->
+  <div class="sea-float" data-speed="0.06"
+       style="left:8%;top:calc(35% + 450px);width:360px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.28">
+    <img src="assets/uw-jellyfish.png" alt="" style="width:100%;
+         filter:brightness(0.28) contrast(0.5) blur(0.3px);">
+  </div>
+
+  <!-- Small fish — left side, lower -->
+  <div class="sea-float" data-speed="0.22"
+       style="left:5%;top:72%;width:120px;opacity:0;transition:opacity 0.5s;">
+    <img src="assets/uw-fish-small.png" alt="" style="width:100%;
+         filter:brightness(0.45) contrast(0.8) blur(0.2px);" style="transform:scaleX(-1);">
+  </div>
+
+  <!-- Small fish 2 — right side, below debris -->
+  <div class="sea-float" data-speed="0.28"
+       style="right:5%;top:38%;width:540px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.3">
+    <img src="assets/uw-fish-small.png" alt="" style="width:100%;
+         filter:brightness(0.38) contrast(0.9) blur(0.1px);">
+  </div>
 
   <div class="inner">
     <p class="label reveal">What the data reveals</p>
@@ -1088,6 +1041,35 @@ new Chart('cEmbarked', {
     scales: { y: pctAxis(), x: hiddenAxis() }
   }
 });
+
+/* ── Underwater element parallax ────────────────────────── */
+(function () {
+  const section  = document.getElementById('patterns');
+  const floaters = section.querySelectorAll('.sea-float');
+
+  // Reveal each floater only when its image actually loads
+  floaters.forEach(wrapper => {
+    const img = wrapper.querySelector('img');
+    if (!img) return;
+    const finalOpacity = wrapper.dataset.finalOpacity || '1';
+    img.addEventListener('load', () => { wrapper.style.opacity = finalOpacity; });
+    img.addEventListener('error', () => { wrapper.style.display = 'none'; });
+    if (img.complete && img.naturalWidth) wrapper.style.opacity = finalOpacity;
+  });
+
+  function tick() {
+    const sectionRect = section.getBoundingClientRect();
+    // offset from viewport centre to section centre
+    const centreOffset = (sectionRect.top + sectionRect.height / 2) - window.innerHeight / 2;
+    floaters.forEach(el => {
+      const speed = parseFloat(el.dataset.speed) || 0.1;
+      el.style.transform = `translateY(${centreOffset * speed}px)`;
+    });
+  }
+
+  window.addEventListener('scroll', tick, { passive: true });
+  tick();
+})();
 
 /* ── Scroll cue: hide on first scroll ───────────────────── */
 const scrollCue = document.getElementById('scrollCue');
