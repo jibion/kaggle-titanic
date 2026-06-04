@@ -209,6 +209,18 @@
     .band--dark { background: var(--navy); }
     .bg-art { position: absolute; inset: 0; pointer-events: none; user-select: none; }
 
+    /* mask fades directly on the image — edges dissolve into section bg */
+    img[src^="assets/"] {
+      -webkit-mask-image:
+        linear-gradient(to right,  transparent 0%, black 22%, black 78%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%);
+      mask-image:
+        linear-gradient(to right,  transparent 0%, black 22%, black 78%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 16%, black 84%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
+
     .inner {
       max-width: 1080px; margin: 0 auto;
       padding: 6rem 2rem;
@@ -449,8 +461,8 @@
   <!-- ░ Titanic AI illustration ░ -->
   <img src="assets/titanic.png" aria-hidden="true"
        style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:130%;max-width:1900px;pointer-events:none;
-              filter:invert(1) sepia(0.25) saturate(0.5) hue-rotate(5deg) brightness(0.42);
-              mix-blend-mode:screen;opacity:0.24;">
+              filter:brightness(0.38) contrast(0.9) blur(0.1px);
+              mix-blend-mode:screen;opacity:0.32;">
 
   <div class="hero-content">
     <p class="hero-eyebrow">April 10 – 15, 1912 &nbsp;·&nbsp; North Atlantic</p>
@@ -504,75 +516,11 @@
 <!-- ░░ THE SHIP ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
 <div class="band band--dark" id="ship">
 
-  <!-- ░ 1912 cork life jacket ░ -->
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 520" preserveAspectRatio="xMaxYMid meet"
-       aria-hidden="true"
-       style="position:absolute;right:-2%;top:50%;transform:translateY(-50%);height:88%;opacity:0.07;">
-    <g stroke="#c9a84c" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <!-- Collar ring at top -->
-      <path d="M100 95 Q170 48 240 95" stroke-width="2.5"/>
-      <path d="M108 103 Q170 60 232 103" stroke-width="1.2"/>
-      <!-- Shoulder straps -->
-      <path d="M108 103 L88 52 L58 50" stroke-width="2"/>
-      <path d="M232 103 L252 52 L282 50" stroke-width="2"/>
-      <!-- Main body outer frame -->
-      <rect x="70" y="100" width="200" height="330" rx="12" stroke-width="2.5"/>
-      <!-- Horizontal cork dividers (stitching lines) -->
-      <line x1="70" y1="148" x2="270" y2="148" stroke-width="1.5" stroke-dasharray="4 2"/>
-      <line x1="70" y1="196" x2="270" y2="196" stroke-width="1.5" stroke-dasharray="4 2"/>
-      <line x1="70" y1="244" x2="270" y2="244" stroke-width="1.5" stroke-dasharray="4 2"/>
-      <line x1="70" y1="292" x2="270" y2="292" stroke-width="1.5" stroke-dasharray="4 2"/>
-      <line x1="70" y1="340" x2="270" y2="340" stroke-width="1.5" stroke-dasharray="4 2"/>
-      <line x1="70" y1="388" x2="270" y2="388" stroke-width="1.5" stroke-dasharray="4 2"/>
-      <!-- Vertical cork dividers -->
-      <line x1="130" y1="100" x2="130" y2="430" stroke-width="1" stroke-dasharray="4 2"/>
-      <line x1="190" y1="100" x2="190" y2="430" stroke-width="1" stroke-dasharray="4 2"/>
-      <!-- Cork blocks (rounded rects in each cell) -->
-      <!-- Row 1 -->
-      <rect x="78" y="108" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="138" y="108" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="198" y="108" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <!-- Row 2 -->
-      <rect x="78" y="156" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="138" y="156" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="198" y="156" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <!-- Row 3 -->
-      <rect x="78" y="204" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="138" y="204" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="198" y="204" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <!-- Row 4 -->
-      <rect x="78" y="252" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="138" y="252" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="198" y="252" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <!-- Row 5 -->
-      <rect x="78" y="300" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="138" y="300" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="198" y="300" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <!-- Row 6 -->
-      <rect x="78" y="348" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="138" y="348" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <rect x="198" y="348" width="44" height="32" rx="5" stroke-width="1.2"/>
-      <!-- Row 7 -->
-      <rect x="78" y="396" width="44" height="26" rx="5" stroke-width="1.2"/>
-      <rect x="138" y="396" width="44" height="26" rx="5" stroke-width="1.2"/>
-      <rect x="198" y="396" width="44" height="26" rx="5" stroke-width="1.2"/>
-      <!-- White Star Line label plate -->
-      <rect x="130" y="266" width="80" height="28" rx="3" stroke-width="1.5"/>
-      <line x1="138" y1="275" x2="202" y2="275" stroke-width="0.8"/>
-      <line x1="138" y1="284" x2="202" y2="284" stroke-width="0.8"/>
-      <!-- Waist tie cords -->
-      <path d="M70 420 Q42 435 28 450" stroke-width="1.8"/>
-      <path d="M270 420 Q298 435 312 450" stroke-width="1.8"/>
-      <!-- Tie knot -->
-      <circle cx="28" cy="452" r="5" stroke-width="1.5"/>
-      <circle cx="312" cy="452" r="5" stroke-width="1.5"/>
-      <!-- Adjustment buckles on shoulders -->
-      <rect x="68" y="58" width="22" height="14" rx="2" stroke-width="1.2"/>
-      <line x1="79" y1="58" x2="79" y2="72" stroke-width="0.9"/>
-      <rect x="250" y="58" width="22" height="14" rx="2" stroke-width="1.2"/>
-      <line x1="261" y1="58" x2="261" y2="72" stroke-width="0.9"/>
-    </g>
-  </svg>
+  <!-- ░ Ship deck scene ░ -->
+  <img src="assets/ship-deck.png" aria-hidden="true"
+       style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:100%;object-fit:cover;pointer-events:none;
+              filter: brightness(0.38) contrast(0.85) blur(0.1px);
+              mix-blend-mode:screen;opacity:0.22;">
 
   <div class="inner reveal">
     <p class="label">The Vessel</p>
@@ -622,50 +570,10 @@
 <div class="band band--mid" id="night">
 
   <!-- ░ Iceberg ░ -->
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 800" preserveAspectRatio="xMaxYMid meet"
-       aria-hidden="true"
-       style="position:absolute;right:0;top:50%;transform:translateY(-50%);height:100%;opacity:0.08;">
-    <g stroke="#c9a84c" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <!-- ABOVE WATERLINE — jagged peak -->
-      <path d="M260 30 L320 110 L390 85 L420 155 L400 165 L430 205 L390 195 L410 248 L260 248 L110 248 L130 195 L90 205 L120 165 L100 155 L130 85 L200 110 Z" stroke-width="2"/>
-      <!-- Internal facet lines — above water -->
-      <line x1="260" y1="30" x2="220" y2="120" stroke-width="1"/>
-      <line x1="260" y1="30" x2="300" y2="115" stroke-width="1"/>
-      <line x1="220" y1="120" x2="260" y2="100" stroke-width="0.8"/>
-      <line x1="300" y1="115" x2="260" y2="100" stroke-width="0.8"/>
-      <line x1="130" y1="85" x2="185" y2="160" stroke-width="0.8"/>
-      <line x1="390" y1="85" x2="335" y2="160" stroke-width="0.8"/>
-      <line x1="185" y1="160" x2="260" y2="140" stroke-width="0.7"/>
-      <line x1="335" y1="160" x2="260" y2="140" stroke-width="0.7"/>
-      <line x1="110" y1="248" x2="190" y2="215" stroke-width="0.7"/>
-      <line x1="410" y1="248" x2="330" y2="215" stroke-width="0.7"/>
-      <!-- Crack lines in ice -->
-      <path d="M240 70 L230 108 L248 125" stroke-width="0.8" stroke-dasharray="3 2"/>
-      <path d="M300 90 L318 118 L308 140" stroke-width="0.8" stroke-dasharray="3 2"/>
-      <path d="M170 150 L182 178 L165 195" stroke-width="0.7" stroke-dasharray="2 2"/>
-      <!-- WATERLINE -->
-      <path d="M40 248 Q180 238 260 248 Q340 258 480 248" stroke-width="1.5" stroke-dasharray="8 5"/>
-      <!-- Water ripples against base -->
-      <path d="M80 260 Q180 270 260 262 Q340 254 440 265" stroke-width="0.8" stroke-dasharray="5 4" opacity="0.5"/>
-      <path d="M60 278 Q170 288 260 280 Q350 272 460 282" stroke-width="0.6" stroke-dasharray="4 5" opacity="0.35"/>
-      <!-- BELOW WATERLINE — much wider hidden mass -->
-      <path d="M110 248 L60 330 L30 420 L50 510 L100 575 L180 620 L260 635 L340 620 L420 575 L470 510 L490 420 L460 330 L410 248 Z" stroke-width="1.8" opacity="0.7"/>
-      <!-- Underwater facets -->
-      <line x1="110" y1="248" x2="160" y2="400" stroke-width="0.8" opacity="0.6"/>
-      <line x1="410" y1="248" x2="360" y2="400" stroke-width="0.8" opacity="0.6"/>
-      <line x1="160" y1="400" x2="260" y2="360" stroke-width="0.7" opacity="0.5"/>
-      <line x1="360" y1="400" x2="260" y2="360" stroke-width="0.7" opacity="0.5"/>
-      <line x1="60" y1="330" x2="160" y2="400" stroke-width="0.7" opacity="0.5"/>
-      <line x1="460" y1="330" x2="360" y2="400" stroke-width="0.7" opacity="0.5"/>
-      <line x1="50" y1="510" x2="180" y2="500" stroke-width="0.7" opacity="0.4"/>
-      <line x1="470" y1="510" x2="340" y2="500" stroke-width="0.7" opacity="0.4"/>
-      <line x1="180" y1="500" x2="260" y2="470" stroke-width="0.6" opacity="0.4"/>
-      <line x1="340" y1="500" x2="260" y2="470" stroke-width="0.6" opacity="0.4"/>
-      <!-- Small ice fragments floating nearby -->
-      <path d="M32 290 L22 304 L38 310 L50 298 Z" stroke-width="1" opacity="0.5"/>
-      <path d="M468 308 L458 320 L474 326 L486 314 Z" stroke-width="1" opacity="0.5"/>
-    </g>
-  </svg>
+  <img src="assets/iceberg.png" aria-hidden="true"
+       style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:100%;width:auto;pointer-events:none;
+              filter:brightness(0.38) contrast(0.95) blur(0.3px);
+              mix-blend-mode:screen;opacity:0.22;">
 
   <div class="inner">
     <p class="label reveal">The Night</p>
@@ -720,68 +628,11 @@
 <!-- ░░ THE DATASET ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
 <div class="band band--dark" id="eda">
 
-  <!-- ░ Passenger on floating door/plank ░ -->
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" preserveAspectRatio="xMaxYMax meet"
-       aria-hidden="true"
-       style="position:absolute;bottom:0;right:0;width:58%;opacity:0.1;">
-    <g stroke="#c9a84c" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <!-- WATER — layered wave lines -->
-      <path d="M0 220 Q60 208 120 220 Q180 232 240 220 Q300 208 360 220 Q420 232 480 220 Q540 208 600 220 Q660 232 720 220 Q760 212 800 218" stroke-width="1.5"/>
-      <path d="M0 240 Q70 228 140 240 Q210 252 280 240 Q350 228 420 240 Q490 252 560 240 Q630 228 700 240 Q760 248 800 242" stroke-width="1.2"/>
-      <path d="M0 260 Q80 248 160 260 Q240 272 320 260 Q400 248 480 260 Q560 272 640 260 Q720 248 800 258" stroke-width="1"/>
-      <path d="M0 278 Q90 268 180 278 Q270 288 360 278 Q450 268 540 278 Q630 288 720 278 Q770 284 800 278" stroke-width="0.8" opacity="0.7"/>
-      <path d="M0 295 Q100 285 200 295 Q300 305 400 295 Q500 285 600 295 Q700 305 800 297" stroke-width="0.7" opacity="0.5"/>
-      <path d="M0 312 Q120 304 240 312 Q360 320 480 312 Q600 304 720 312 Q770 316 800 313" stroke-width="0.6" opacity="0.35"/>
-      <!-- WOODEN DOOR / PLANK -->
-      <!-- Main door shape -->
-      <rect x="80" y="196" width="560" height="62" rx="3" stroke-width="2"/>
-      <!-- Door panel sections -->
-      <rect x="96" y="204" width="240" height="22" rx="2" stroke-width="1"/>
-      <rect x="344" y="204" width="240" height="22" rx="2" stroke-width="1"/>
-      <rect x="96" y="226" width="240" height="24" rx="2" stroke-width="1"/>
-      <rect x="344" y="226" width="240" height="24" rx="2" stroke-width="1"/>
-      <!-- Door centre divider -->
-      <line x1="340" y1="196" x2="340" y2="258" stroke-width="1.5"/>
-      <!-- Wood grain lines -->
-      <line x1="80" y1="210" x2="640" y2="210" stroke-width="0.7" stroke-dasharray="16 4 4 4" opacity="0.6"/>
-      <line x1="80" y1="218" x2="640" y2="218" stroke-width="0.5" stroke-dasharray="12 6 3 6" opacity="0.4"/>
-      <line x1="80" y1="242" x2="640" y2="242" stroke-width="0.7" stroke-dasharray="16 4 4 4" opacity="0.6"/>
-      <line x1="80" y1="250" x2="640" y2="250" stroke-width="0.5" stroke-dasharray="12 6 3 6" opacity="0.4"/>
-      <!-- Door hinge details -->
-      <rect x="86" y="206" width="10" height="18" rx="1" stroke-width="1"/>
-      <rect x="86" y="232" width="10" height="18" rx="1" stroke-width="1"/>
-      <!-- FIGURE — woman lying on door, head at right, arm hanging left -->
-      <!-- Head (woman, longer hair suggestion) -->
-      <circle cx="570" cy="178" r="22" stroke-width="1.8"/>
-      <!-- Hair flowing -->
-      <path d="M555 163 Q548 150 552 138 Q558 128 568 132" stroke-width="1.2"/>
-      <path d="M575 160 Q582 148 578 136" stroke-width="1.2"/>
-      <path d="M585 168 Q596 158 598 145 Q596 134 586 132" stroke-width="1.2"/>
-      <!-- Face detail — eye, nose -->
-      <circle cx="563" cy="176" r="2.5" stroke-width="1"/>
-      <path d="M569 182 Q572 185 575 182" stroke-width="1"/>
-      <!-- Neck -->
-      <line x1="570" y1="200" x2="570" y2="212" stroke-width="8" stroke-linecap="round"/>
-      <!-- Body lying on door, foreshortened perspective -->
-      <path d="M540 210 L560 213 L210 218 L185 215 Z" stroke-width="1.2"/>
-      <!-- Body fill/clothes suggestion -->
-      <line x1="510" y1="211" x2="220" y2="216" stroke-width="10" stroke-linecap="round" opacity="0.6"/>
-      <!-- Arm hanging off left side into water -->
-      <path d="M300 216 Q280 230 265 248 Q255 262 258 278" stroke-width="5" stroke-linecap="round"/>
-      <!-- Hand -->
-      <circle cx="258" cy="282" r="7" stroke-width="1.5"/>
-      <!-- Legs visible at right -->
-      <path d="M185 215 L155 224" stroke-width="9" stroke-linecap="round"/>
-      <path d="M175 218 L142 230" stroke-width="7" stroke-linecap="round"/>
-      <!-- Stars reflection in water near arm (subtle) -->
-      <circle cx="240" cy="310" r="2" stroke-width="0.8" opacity="0.5"/>
-      <circle cx="258" cy="330" r="1.5" stroke-width="0.8" opacity="0.4"/>
-      <circle cx="275" cy="318" r="1" stroke-width="0.8" opacity="0.4"/>
-      <!-- Floating debris nearby -->
-      <path d="M700 238 L720 240 L718 252 L696 250 Z" stroke-width="1" opacity="0.5"/>
-      <path d="M740 250 L760 248 L762 262 L740 264 Z" stroke-width="1" opacity="0.4"/>
-    </g>
-  </svg>
+  <!-- ░ Disaster survivors scene ░ -->
+  <img src="assets/survivors.png" aria-hidden="true"
+       style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:100%;object-fit:cover;pointer-events:none;
+              filter:brightness(0.538) contrast(0.95) blur(0.1px);
+              mix-blend-mode:screen;opacity:0.22;">
 
   <div class="inner">
     <p class="label reveal">Exploratory Data Analysis</p>
