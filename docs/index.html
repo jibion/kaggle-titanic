@@ -401,6 +401,7 @@
       margin-bottom: 1.4rem;
     }
     canvas { max-height: 260px; }
+    #cOverall { max-height: none; }
 
     /* ─── MISSING DATA BAR ────────────────────────────── */
     .missing-grid {
@@ -758,16 +759,16 @@
 
   <!-- Debris — right side, background layer above small fish -->
   <div class="sea-float" data-speed="0.08"
-       style="right:0%;top:2%;width:36%;max-width:580px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.18">
+       style="right:0%;top:2%;width:46%;max-width:680px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.18">
     <img src="assets/uw-debris.png" alt="" style="width:100%;
          filter:brightness(0.22) contrast(0.7) blur(1.8px);">
   </div>
 
   <!-- Jellyfish — left side, behind drowning figure -->
   <div class="sea-float" data-speed="0.06"
-       style="left:8%;top:calc(35% + 450px);width:360px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.28">
+       style="left:4%;top:calc(35% + 350px);width:360px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.3">
     <img src="assets/uw-jellyfish.png" alt="" style="width:100%;
-         filter:brightness(0.28) contrast(0.5) blur(0.3px);">
+         filter:brightness(0.28) contrast(0.9) blur(0.2px);">
   </div>
 
   <!-- Small fish — left side, lower -->
@@ -788,34 +789,32 @@
     <p class="label reveal">What the data reveals</p>
     <h2 class="reveal">Survival Was Not Random</h2>
     <div class="rule reveal"></div>
-    <p class="reveal">
-      Three factors dominate survival in this dataset: <strong style="color:var(--text)">sex</strong>,
-      <strong style="color:var(--text)">ticket class</strong>, and <strong style="color:var(--text)">age</strong>.
-      The "women and children first" maritime tradition was real — and the class divide was stark.
-    </p>
+
+    <div class="chart-card reveal" style="margin-bottom:2rem;">
+      <div class="chart-title">Overall — survived vs. lost</div>
+      <canvas id="cOverall"></canvas>
+    </div>
 
     <div class="insight reveal">
       <p>
-        <strong>The starkest finding:</strong> a first-class woman had a <strong>96.8%</strong> chance of
+        Three factors dominate survival in this dataset: <strong>sex</strong>,
+        <strong>ticket class</strong>, and <strong>age</strong>. The "women and children first" 
+        maritime tradition was real — and the class divide was stark. <strong>The starkest finding:</strong> a first-class woman had a <strong>96.8%</strong> chance of
         survival. A third-class man had a <strong>13.5%</strong> chance. Same ship, same iceberg — a
         sevenfold difference explained almost entirely by two categorical variables.
       </p>
     </div>
 
     <div class="chart-grid">
-      <div class="chart-card reveal">
-        <div class="chart-title">Overall — survived vs. lost</div>
-        <canvas id="cOverall"></canvas>
-      </div>
-      <div class="chart-card reveal">
+      <div class="chart-card reveal" style="grid-column:1/-1;">
         <div class="chart-title">Survival rate by gender</div>
         <canvas id="cGender"></canvas>
       </div>
-      <div class="chart-card reveal">
+      <div class="chart-card reveal" style="grid-column:1/-1;">
         <div class="chart-title">Survival rate by ticket class</div>
         <canvas id="cClass"></canvas>
       </div>
-      <div class="chart-card reveal">
+      <div class="chart-card reveal" style="grid-column:1/-1;">
         <div class="chart-title">Class × gender interaction</div>
         <canvas id="cMatrix"></canvas>
       </div>
@@ -922,89 +921,369 @@ function hiddenAxis() {
 }
 
 /* ── Chart 1: Overall ────────────────────────────────── */
-new Chart('cOverall', {
-  type: 'doughnut',
-  data: {
-    labels: ['Did not survive (61.6%)', 'Survived (38.4%)'],
-    datasets: [{
-      data: [549, 342],
-      backgroundColor: ['rgba(201,76,107,0.75)', 'rgba(78,201,196,0.75)'],
-      borderColor: [ROSE, TEAL],
-      borderWidth: 1.5,
-      hoverOffset: 8,
-    }]
-  },
-  options: {
-    cutout: '68%',
-    plugins: {
-      legend: { position: 'bottom', labels: { padding: 16 } },
-      tooltip: { callbacks: { label: ctx => ` ${ctx.raw} passengers` } }
-    }
-  }
-});
+/* ── Dot chart: 891 people ───────────────────────────── */
+(function () {
+  const TOTAL = 891, SURVIVED = 342, LOST = 549;
+  const COLS = 99, ROWS = 9;        // 99 × 9 = 891 exactly
+  const TEAL_C = '#4ec9c4', ROSE_C = '#c94c6b';
 
-/* ── Chart 2: Gender ─────────────────────────────────── */
-new Chart('cGender', {
-  type: 'bar',
-  data: {
-    labels: ['Female', 'Male'],
-    datasets: [{
-      data: [74.2, 18.9],
-      backgroundColor: ['rgba(78,201,196,0.7)', 'rgba(201,168,76,0.7)'],
-      borderColor: [TEAL, GOLD],
-      borderWidth: 1.5, borderRadius: 6,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    plugins: { legend: { display: false } },
-    scales: { x: pctAxis(), y: hiddenAxis() }
-  }
-});
+  const canvas = document.getElementById('cOverall');
+  const card   = canvas.closest('.chart-card');
 
-/* ── Chart 3: Class ──────────────────────────────────── */
-new Chart('cClass', {
-  type: 'bar',
-  data: {
-    labels: ['1st Class', '2nd Class', '3rd Class'],
-    datasets: [{
-      data: [63.0, 47.3, 24.2],
-      backgroundColor: ['rgba(78,201,196,0.7)', 'rgba(201,168,76,0.7)', 'rgba(201,76,107,0.7)'],
-      borderColor: [TEAL, GOLD, ROSE],
-      borderWidth: 1.5, borderRadius: 6,
-    }]
-  },
-  options: {
-    plugins: { legend: { display: false } },
-    scales: { y: pctAxis(), x: hiddenAxis() }
-  }
-});
+  // Replace canvas with a wrapper that holds canvas + legend
+  const wrap = document.createElement('div');
+  card.replaceChild(wrap, canvas);
+  wrap.appendChild(canvas);
 
-/* ── Chart 4: Class × Gender ─────────────────────────── */
-new Chart('cMatrix', {
-  type: 'bar',
-  data: {
-    labels: ['1st Class', '2nd Class', '3rd Class'],
-    datasets: [
-      {
-        label: 'Female',
-        data: [96.8, 92.1, 50.0],
-        backgroundColor: 'rgba(78,201,196,0.7)',
-        borderColor: TEAL, borderWidth: 1.5, borderRadius: 4,
-      },
-      {
-        label: 'Male',
-        data: [36.9, 15.7, 13.5],
-        backgroundColor: 'rgba(201,168,76,0.65)',
-        borderColor: GOLD, borderWidth: 1.5, borderRadius: 4,
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;gap:1.8rem;margin-top:1rem;font-size:0.78rem;color:#8a9ab8;';
+  legend.innerHTML = `
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${TEAL_C};margin-right:6px;vertical-align:middle;"></span>Survived — 342 passengers (38.4%)</span>
+    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${ROSE_C};margin-right:6px;vertical-align:middle;"></span>Did not survive — 549 passengers (61.6%)</span>`;
+  wrap.appendChild(legend);
+
+  function draw() {
+    const dpr  = window.devicePixelRatio || 1;
+    const w    = canvas.parentElement.clientWidth;
+    const slot = w / COLS;
+    const r    = slot * 0.36;
+    const h    = ROWS * slot;
+
+    canvas.width  = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.cssText = `width:${w}px;height:${h}px;display:block;`;
+
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    let drawn = 0;
+    const BATCH = 20;
+
+    function frame() {
+      for (let b = 0; b < BATCH && drawn < TOTAL; b++, drawn++) {
+        const col = drawn % COLS;
+        const row = Math.floor(drawn / COLS);
+        ctx.beginPath();
+        ctx.arc(col * slot + slot / 2, row * slot + slot / 2, r, 0, Math.PI * 2);
+        ctx.fillStyle = drawn < SURVIVED ? TEAL_C : ROSE_C;
+        ctx.globalAlpha = 0.88;
+        ctx.fill();
       }
-    ]
-  },
-  options: {
-    plugins: { legend: { position: 'bottom' } },
-    scales: { y: pctAxis(), x: hiddenAxis() }
+      if (drawn < TOTAL) requestAnimationFrame(frame);
+    }
+
+    // Trigger when scrolled into view
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { frame(); obs.disconnect(); }
+    }, { threshold: 0.2 });
+    obs.observe(canvas);
   }
-});
+
+  // Draw once fonts/layout settle
+  if (document.readyState === 'complete') draw();
+  else window.addEventListener('load', draw);
+})();
+
+/* ── Chart 2: Gender — 891 real dots split by gender ─── */
+(function () {
+  const TEAL_C = '#4ec9c4', ROSE_C = '#c94c6b';
+  const ICON_FILTER = 'brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg) brightness(0.88)';
+
+  const groups = [
+    { icon: 'assets/man.svg',   label: 'Male',   total: 577, survived: 109 },
+    { icon: 'assets/woman.svg', label: 'Female', total: 314, survived: 233 },
+  ];
+
+  const origCanvas = document.getElementById('cGender');
+  const card = origCanvas.parentElement;
+  origCanvas.remove();
+
+  // Build stacked rows layout (female above male)
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;gap:1.2rem;';
+  card.appendChild(wrap);
+
+  const cs     = getComputedStyle(card);
+  const availW = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const SLOT   = 10;
+  const COLS   = Math.floor(availW / SLOT);
+  const DOT_R  = SLOT * 0.36;
+  const dpr    = window.devicePixelRatio || 1;
+
+  const canvases = [];
+
+  groups.forEach(g => {
+    const ROWS = Math.ceil(g.total / COLS);
+    const h    = ROWS * SLOT;
+
+    const grp = document.createElement('div');
+    grp.style.cssText = 'display:flex;flex-direction:column;gap:0.4rem;';
+
+    // Header: icon + label
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
+    const icon = document.createElement('img');
+    icon.src = g.icon;
+    icon.style.cssText = `height:28px;width:auto;filter:${ICON_FILTER};`;
+    const lbl = document.createElement('span');
+    lbl.style.cssText = 'font-size:0.78rem;color:#8a9ab8;letter-spacing:0.04em;';
+    lbl.textContent = `${g.label} — ${g.total} passengers · ${Math.round(g.survived/g.total*100)}% survived`;
+    header.appendChild(icon); header.appendChild(lbl);
+    grp.appendChild(header);
+
+    // Canvas — full width
+    const cv = document.createElement('canvas');
+    cv.width  = Math.round(availW * dpr);
+    cv.height = Math.round(h * dpr);
+    cv.style.cssText = `width:${availW}px;height:${h}px;display:block;max-height:none;`;
+    grp.appendChild(cv);
+    wrap.appendChild(grp);
+    canvases.push({ cv, g });
+  });
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;gap:1.5rem;font-size:0.78rem;color:#8a9ab8;';
+  legend.innerHTML = `
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${TEAL_C};margin-right:5px;vertical-align:middle;"></span>Survived</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${ROSE_C};margin-right:5px;vertical-align:middle;"></span>Did not survive</span>`;
+  wrap.appendChild(legend);
+
+  function drawAll() {
+    canvases.forEach(({ cv, g }) => {
+      const ctx = cv.getContext('2d');
+      ctx.scale(dpr, dpr);
+      for (let i = 0; i < g.total; i++) {
+        const col = i % COLS;
+        const row = Math.floor(i / COLS);
+        ctx.beginPath();
+        ctx.arc(col * SLOT + SLOT / 2, row * SLOT + SLOT / 2, DOT_R, 0, Math.PI * 2);
+        ctx.fillStyle = i < g.survived ? TEAL_C : ROSE_C;
+        ctx.globalAlpha = 0.88;
+        ctx.fill();
+      }
+    });
+  }
+
+  const obs = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { drawAll(); obs.disconnect(); }
+  }, { threshold: 0.1 });
+  obs.observe(wrap);
+  if (document.readyState === 'complete') drawAll();
+  else window.addEventListener('load', drawAll);
+})();
+
+/* ── Chart 3: Class dot chart ────────────────────────── */
+(function () {
+  const TEAL_C = '#4ec9c4', ROSE_C = '#c94c6b';
+
+  const classes = [
+    { label: '3rd Class', total: 491, survived: 119 },
+    { label: '2nd Class', total: 184, survived: 87  },
+    { label: '1st Class', total: 216, survived: 136 },
+  ];
+
+  const origCanvas = document.getElementById('cClass');
+  const card = origCanvas.parentElement;
+  origCanvas.remove();
+
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;flex-direction:column;gap:0.8rem;';
+  card.appendChild(wrap);
+
+  const cs     = getComputedStyle(card);
+  const availW = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const SLOT   = 10;
+  const COLS   = Math.floor(availW / SLOT);
+  const DOT_R  = SLOT * 0.36;
+  const dpr    = window.devicePixelRatio || 1;
+
+  const canvases = [];
+
+  classes.forEach(g => {
+    const ROWS = Math.ceil(g.total / COLS);
+    const h    = ROWS * SLOT;
+
+    const grp = document.createElement('div');
+    grp.style.cssText = 'display:flex;flex-direction:column;gap:0.4rem;';
+
+    // Header label
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex;align-items:baseline;gap:0.5rem;';
+
+    const lbl = document.createElement('span');
+    lbl.style.cssText = 'font-size:0.9rem;font-weight:500;color:#dde3ef;letter-spacing:0.02em;font-family:Lora,serif;';
+    lbl.textContent = g.label;
+
+    const stat = document.createElement('span');
+    stat.style.cssText = 'font-size:0.72rem;color:#8a9ab8;';
+    stat.textContent = `${g.total} passengers · ${Math.round(g.survived/g.total*100)}% survived`;
+
+    header.appendChild(lbl); header.appendChild(stat);
+    grp.appendChild(header);
+
+    const cv = document.createElement('canvas');
+    cv.width  = Math.round(availW * dpr);
+    cv.height = Math.round(h * dpr);
+    cv.style.cssText = `width:${availW}px;height:${h}px;display:block;max-height:none;`;
+    grp.appendChild(cv);
+    wrap.appendChild(grp);
+    canvases.push({ cv, g });
+  });
+
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;gap:1.5rem;font-size:0.78rem;color:#8a9ab8;';
+  legend.innerHTML = `
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${TEAL_C};margin-right:5px;vertical-align:middle;"></span>Survived</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${ROSE_C};margin-right:5px;vertical-align:middle;"></span>Did not survive</span>`;
+  wrap.appendChild(legend);
+
+  function drawAll() {
+    canvases.forEach(({ cv, g }) => {
+      const ctx = cv.getContext('2d');
+      ctx.scale(dpr, dpr);
+      for (let i = 0; i < g.total; i++) {
+        const col = i % COLS;
+        const row = Math.floor(i / COLS);
+        ctx.beginPath();
+        ctx.arc(col * SLOT + SLOT / 2, row * SLOT + SLOT / 2, DOT_R, 0, Math.PI * 2);
+        ctx.fillStyle = i < g.survived ? TEAL_C : ROSE_C;
+        ctx.globalAlpha = 0.88;
+        ctx.fill();
+      }
+    });
+  }
+
+  const obs = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { drawAll(); obs.disconnect(); }
+  }, { threshold: 0.1 });
+  obs.observe(wrap);
+  if (document.readyState === 'complete') drawAll();
+  else window.addEventListener('load', drawAll);
+})();
+
+/* ── Chart 4: Class × Gender dot matrix ─────────────── */
+(function () {
+  const TEAL_C = '#4ec9c4', ROSE_C = '#c94c6b';
+  const ICON_FILTER = 'brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(5deg) brightness(0.88)';
+
+  // Male left (most perished), Female right — 3rd class at top
+  const genders = [
+    {
+      icon: 'assets/man.svg', label: 'Male',
+      classes: [
+        { label: '3rd Class', total: 347, survived: 47  },
+        { label: '2nd Class', total: 108, survived: 17  },
+        { label: '1st Class', total: 122, survived: 45  },
+      ]
+    },
+    {
+      icon: 'assets/woman.svg', label: 'Female',
+      classes: [
+        { label: '3rd Class', total: 144, survived: 72  },
+        { label: '2nd Class', total: 76,  survived: 70  },
+        { label: '1st Class', total: 94,  survived: 91  },
+      ]
+    }
+  ];
+
+  const origCanvas = document.getElementById('cMatrix');
+  const card = origCanvas.parentElement;
+  origCanvas.remove();
+
+  const cs     = getComputedStyle(card);
+  const availW = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const colW   = Math.floor((availW - 16) / 2);
+  const SLOT   = 10;
+  const COLS   = Math.floor(colW / SLOT);
+  const DOT_R  = SLOT * 0.36;
+  const dpr    = window.devicePixelRatio || 1;
+
+  const outerRow = document.createElement('div');
+  outerRow.style.cssText = 'display:flex;gap:16px;align-items:flex-start;';
+  card.appendChild(outerRow);
+
+  const canvases = [];
+
+  genders.forEach(gender => {
+    const col = document.createElement('div');
+    col.style.cssText = `flex:0 0 ${colW}px;display:flex;flex-direction:column;gap:0.9rem;`;
+
+    // Gender header
+    const gHdr = document.createElement('div');
+    gHdr.style.cssText = 'display:flex;align-items:center;gap:0.5rem;';
+    const icon = document.createElement('img');
+    icon.src = gender.icon;
+    icon.style.cssText = `height:26px;width:auto;filter:${ICON_FILTER};`;
+    const gLbl = document.createElement('span');
+    gLbl.style.cssText = 'font-size:0.88rem;font-weight:500;color:#dde3ef;font-family:Lora,serif;';
+    gLbl.textContent = gender.label;
+    gHdr.appendChild(icon); gHdr.appendChild(gLbl);
+    col.appendChild(gHdr);
+
+    // Class rows within this gender column
+    gender.classes.forEach(g => {
+      const ROWS = Math.ceil(g.total / COLS);
+      const h    = ROWS * SLOT;
+
+      const grp = document.createElement('div');
+      grp.style.cssText = 'display:flex;flex-direction:column;gap:0.25rem;';
+
+      const rHdr = document.createElement('div');
+      rHdr.style.cssText = 'display:flex;align-items:baseline;gap:0.4rem;';
+      const rLbl = document.createElement('span');
+      rLbl.style.cssText = 'font-size:0.75rem;color:#dde3ef;';
+      rLbl.textContent = g.label;
+      const rStat = document.createElement('span');
+      rStat.style.cssText = 'font-size:0.68rem;color:#8a9ab8;';
+      rStat.textContent = `${g.total} · ${Math.round(g.survived/g.total*100)}% survived`;
+      rHdr.appendChild(rLbl); rHdr.appendChild(rStat);
+      grp.appendChild(rHdr);
+
+      const cv = document.createElement('canvas');
+      cv.width  = Math.round(colW * dpr);
+      cv.height = Math.round(h * dpr);
+      cv.style.cssText = `width:${colW}px;height:${h}px;display:block;max-height:none;`;
+      grp.appendChild(cv);
+      col.appendChild(grp);
+      canvases.push({ cv, g });
+    });
+
+    outerRow.appendChild(col);
+  });
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'display:flex;gap:1.5rem;font-size:0.78rem;color:#8a9ab8;margin-top:0.6rem;';
+  legend.innerHTML = `
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${TEAL_C};margin-right:5px;vertical-align:middle;"></span>Survived</span>
+    <span><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${ROSE_C};margin-right:5px;vertical-align:middle;"></span>Did not survive</span>`;
+  card.appendChild(legend);
+
+  function drawAll() {
+    canvases.forEach(({ cv, g }) => {
+      const ctx = cv.getContext('2d');
+      ctx.scale(dpr, dpr);
+      for (let i = 0; i < g.total; i++) {
+        const col = i % COLS;
+        const row = Math.floor(i / COLS);
+        ctx.beginPath();
+        ctx.arc(col * SLOT + SLOT / 2, row * SLOT + SLOT / 2, DOT_R, 0, Math.PI * 2);
+        ctx.fillStyle = i < g.survived ? TEAL_C : ROSE_C;
+        ctx.globalAlpha = 0.88;
+        ctx.fill();
+      }
+    });
+  }
+
+  const obs = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { drawAll(); obs.disconnect(); }
+  }, { threshold: 0.1 });
+  obs.observe(outerRow);
+  if (document.readyState === 'complete') drawAll();
+  else window.addEventListener('load', drawAll);
+})();
 
 /* ── Chart 5: Age buckets ────────────────────────────── */
 new Chart('cAge', {
