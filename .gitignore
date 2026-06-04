@@ -1,0 +1,11 @@
+data/
+data/**/*.csv
+.env
+# .env is NOT safe to commit — it contains your Kaggle API key
+.venv/
+__pycache__/
+*.pkl
+*.ipynb_checkpoints/
+submissions/
+models/
+text_edits.txt
