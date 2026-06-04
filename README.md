@@ -4,25 +4,26 @@
 
 Kaggle competition work for the [Titanic — Machine Learning from Disaster](https://www.kaggle.com/c/titanic) challenge.
 
-## Pages
+## Phases
 
-| | |
-|---|---|
-| Competition index | https://jibion.github.io/kaggle-titanic/ |
-| Titanic data story | https://jibion.github.io/kaggle-titanic/titanic/ |
+| Phase | Status | Link |
+|-------|--------|------|
+| 1 — Exploratory Data Analysis | ✅ Done | [Data story](https://jibion.github.io/kaggle-titanic/titanic/) |
+| 2 — Feature Engineering | 🔄 In progress | [Notebook](titanic/notebooks/02_feature_engineering.ipynb) |
+| 3 — Baseline Model | ⬜ Not started | — |
+| 4 — Tuning & Submission | ⬜ Not started | — |
 
 ## Structure
 
 ```
 titanic/         ← competition code
-├── data/        ← gitignored; see data/README.md to download
-├── notebooks/   ← EDA and modelling notebooks
+├── data/        ← gitignored; download via setup_kaggle.py
+├── notebooks/   ← one notebook per phase
 ├── src/         ← reusable Python modules
 └── submissions/ ← CSVs named YYYY-MM-DD_model_score.csv
-shared/          ← utilities reused across competitions
 docs/            ← GitHub Pages
-├── index.html   ← competition index
-└── titanic/     ← data story
+├── index.html   ← Titanic competition index
+└── titanic/     ← EDA data story
 ```
 
 ## Submission Log
@@ -33,9 +34,10 @@ docs/            ← GitHub Pages
 
 ## Setup
 
+Run everything from the **repo root**:
+
 ```bash
-cd titanic
-python setup_env.py        # creates .venv and installs requirements
-cp ../.env.example ../.env # add your Kaggle API key
-python setup_kaggle.py     # downloads competition data
+python titanic/setup_env.py   # creates .venv at repo root, installs packages
+cp .env.example .env          # fill in your Kaggle API key (KAGGLE_KEY)
+python titanic/setup_kaggle.py  # downloads competition data to titanic/data/raw/
 ```

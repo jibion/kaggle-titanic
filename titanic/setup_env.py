@@ -1,12 +1,13 @@
-"""Create .venv and install requirements.txt into it."""
+"""Create .venv at repo root and install requirements.txt into it."""
 
 import subprocess
 import sys
 from pathlib import Path
 
-
-VENV_DIR = Path(".venv")
-REQUIREMENTS = Path("requirements.txt")
+SCRIPT_DIR  = Path(__file__).resolve().parent   # titanic/
+REPO_ROOT   = SCRIPT_DIR.parent                 # repo root
+VENV_DIR    = REPO_ROOT / ".venv"
+REQUIREMENTS = SCRIPT_DIR / "requirements.txt"
 
 
 def create_venv() -> None:
@@ -34,10 +35,10 @@ def install_requirements() -> None:
 
 
 def print_activation_instructions() -> None:
-    print("\nTo activate the virtual environment:")
+    print("\nTo activate the virtual environment (from repo root):")
     print("  Mac/Linux:  source .venv/bin/activate")
     print("  Windows:    .venv\\Scripts\\activate")
-    print("\nThen run:  python setup_kaggle.py")
+    print("\nThen run:  python titanic/setup_kaggle.py")
 
 
 if __name__ == "__main__":

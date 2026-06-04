@@ -17,7 +17,12 @@ titanic/models/
 # Editor
 .vscode/
 
+# LLMs
+.claude
+claude.md
+
 # Misc
 *.pkl
 titanic_kaggle_roadmap.svg
 text_edits.txt
+

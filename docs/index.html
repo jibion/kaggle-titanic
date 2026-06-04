@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaggle Portfolio</title>
+  <title>Titanic — Machine Learning from Disaster</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,73 +12,144 @@
       --navy: #080f1e; --navy-mid: #0e1f3a;
       --gold: #c9a84c; --gold-dim: rgba(201,168,76,0.18);
       --text: #dde3ef; --text-dim: #8a9ab8;
+      --done: #4caf82; --done-dim: rgba(76,175,130,0.15);
+      --wip: #c9a84c; --wip-dim: rgba(201,168,76,0.12);
+      --todo: #3a4a6b; --todo-dim: rgba(58,74,107,0.3);
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: var(--navy); color: var(--text);
       font-family: 'Inter', sans-serif; font-weight: 300;
       min-height: 100vh; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; padding: 3rem 2rem;
+      align-items: center; padding: 4rem 2rem 5rem;
     }
     .eyebrow {
       font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1rem;
+      color: var(--gold); margin-bottom: 1rem; text-align: center;
     }
     h1 {
-      font-family: 'Lora', serif; font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 700; margin-bottom: 0.6rem;
+      font-family: 'Lora', serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; margin-bottom: 0.6rem; text-align: center;
     }
     .sub {
-      color: var(--text-dim); font-size: 1rem; margin-bottom: 3.5rem;
-      max-width: 480px; text-align: center; line-height: 1.7;
+      color: var(--text-dim); font-size: 0.95rem; margin-bottom: 4rem;
+      max-width: 520px; text-align: center; line-height: 1.7;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.4rem; width: 100%; max-width: 900px;
+    .phases {
+      width: 100%; max-width: 760px;
+      display: flex; flex-direction: column; gap: 1rem;
     }
-    .card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--gold-dim);
-      border-radius: 12px; padding: 1.8rem;
-      text-decoration: none; color: inherit;
-      transition: transform 0.25s, border-color 0.25s, background 0.25s;
-      display: flex; flex-direction: column; gap: 0.6rem;
+    .phase {
+      border-radius: 12px; padding: 1.6rem 1.8rem;
+      display: flex; align-items: flex-start; gap: 1.4rem;
+      border: 1px solid transparent;
     }
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(201,168,76,0.5);
-      background: rgba(255,255,255,0.07);
+    .phase.done   { background: var(--done-dim); border-color: rgba(76,175,130,0.25); }
+    .phase.wip    { background: var(--wip-dim);  border-color: rgba(201,168,76,0.3); }
+    .phase.todo   { background: var(--todo-dim); border-color: rgba(58,74,107,0.5); opacity: 0.6; }
+
+    .phase-num {
+      font-family: 'Lora', serif; font-size: 1.5rem; font-weight: 700;
+      line-height: 1; min-width: 2rem; padding-top: 0.1rem;
     }
-    .card-title {
-      font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 700;
-      color: var(--text);
-    }
-    .card-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
-    .card-meta {
-      margin-top: auto; padding-top: 1rem;
-      display: flex; gap: 1rem; font-size: 0.72rem;
-      text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-dim);
+    .done  .phase-num { color: var(--done); }
+    .wip   .phase-num { color: var(--gold); }
+    .todo  .phase-num { color: var(--text-dim); }
+
+    .phase-body { flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+    .phase-header { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .phase-title {
+      font-family: 'Lora', serif; font-size: 1.05rem; font-weight: 700;
     }
     .badge {
-      background: rgba(201,168,76,0.12); border: 1px solid var(--gold-dim);
-      border-radius: 4px; padding: 0.15rem 0.5rem; color: var(--gold);
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.07em;
+      border-radius: 4px; padding: 0.15rem 0.55rem; border: 1px solid;
     }
+    .badge-done { color: var(--done); border-color: rgba(76,175,130,0.4); background: rgba(76,175,130,0.1); }
+    .badge-wip  { color: var(--gold); border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.1); }
+    .badge-todo { color: var(--text-dim); border-color: rgba(138,154,184,0.3); background: transparent; }
+
+    .phase-desc {
+      font-size: 0.85rem; color: var(--text-dim); line-height: 1.6;
+    }
+    .phase-links {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.6rem;
+    }
+    .link-btn {
+      font-size: 0.75rem; text-decoration: none; padding: 0.3rem 0.85rem;
+      border-radius: 6px; border: 1px solid; transition: background 0.2s, border-color 0.2s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .link-btn.primary {
+      color: var(--gold); border-color: rgba(201,168,76,0.5);
+      background: rgba(201,168,76,0.08);
+    }
+    .link-btn.primary:hover { background: rgba(201,168,76,0.18); border-color: var(--gold); }
+    .link-btn.secondary {
+      color: var(--text-dim); border-color: rgba(138,154,184,0.25);
+      background: transparent;
+    }
+    .link-btn.secondary:hover { background: rgba(255,255,255,0.05); color: var(--text); }
   </style>
 </head>
 <body>
-  <p class="eyebrow">Greg · Kaggle Portfolio</p>
-  <h1>Competition Work</h1>
-  <p class="sub">Exploratory data analysis, feature engineering, and modelling — one story per competition.</p>
-  <div class="grid">
-    <a class="card" href="titanic/">
-      <div class="card-title">Titanic — Machine Learning from Disaster</div>
-      <div class="card-desc">Predict survival using passenger data. Covers EDA, the "women and children first" effect, and class disparities.</div>
-      <div class="card-meta">
-        <span class="badge">In progress</span>
-        <span>Classification</span>
+  <p class="eyebrow">Agustín Suárez · Kaggle</p>
+  <h1>Titanic — Machine Learning from Disaster</h1>
+  <p class="sub">Predict passenger survival using structured data. A step-by-step walkthrough of EDA, feature engineering, and modelling.</p>
+
+  <div class="phases">
+
+    <div class="phase done">
+      <div class="phase-num">1</div>
+      <div class="phase-body">
+        <div class="phase-header">
+          <span class="phase-title">Exploratory Data Analysis</span>
+          <span class="badge badge-done">Done</span>
+        </div>
+        <p class="phase-desc">Passenger survival by gender, age group, and ticket class. Interactive dot charts with survival overlays and a parallax data story.</p>
+        <div class="phase-links">
+          <a class="link-btn primary" href="titanic/">Data story</a>
+        </div>
       </div>
-    </a>
+    </div>
+
+    <div class="phase wip">
+      <div class="phase-num">2</div>
+      <div class="phase-body">
+        <div class="phase-header">
+          <span class="phase-title">Feature Engineering</span>
+          <span class="badge badge-wip">In progress</span>
+        </div>
+        <p class="phase-desc">Title extraction, age imputation via multiple linear regression, family size, fare binning, and cabin deck. Feature inventory and transformation plan.</p>
+        <div class="phase-links">
+          <a class="link-btn primary" href="https://colab.research.google.com/github/jibion/kaggle-titanic/blob/master/titanic/notebooks/02_feature_engineering.ipynb" target="_blank" rel="noopener">Open in Colab</a>
+          <a class="link-btn secondary" href="https://github.com/jibion/kaggle-titanic/blob/master/titanic/notebooks/02_feature_engineering.ipynb" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase todo">
+      <div class="phase-num">3</div>
+      <div class="phase-body">
+        <div class="phase-header">
+          <span class="phase-title">Baseline Model</span>
+          <span class="badge badge-todo">Not started</span>
+        </div>
+        <p class="phase-desc">First submission using logistic regression and a random forest. Establish a CV score baseline before any tuning.</p>
+      </div>
+    </div>
+
+    <div class="phase todo">
+      <div class="phase-num">4</div>
+      <div class="phase-body">
+        <div class="phase-header">
+          <span class="phase-title">Tuning &amp; Submission</span>
+          <span class="badge badge-todo">Not started</span>
+        </div>
+        <p class="phase-desc">Hyperparameter search, ensemble methods, and final leaderboard submissions.</p>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>
