@@ -1,48 +1,41 @@
-# Titanic - Machine Learning from Disaster
+# Kaggle — Titanic
 
-## Project Overview
+[![Data Story](https://img.shields.io/badge/Data%20Story-View-c9a84c?style=flat-square)](https://jibion.github.io/kaggle-titanic/titanic/)
 
-Kaggle competition: predict survival on the Titanic using passenger data.
-Competition page: https://www.kaggle.com/c/titanic
+Kaggle competition work for the [Titanic — Machine Learning from Disaster](https://www.kaggle.com/c/titanic) challenge.
 
-## Setup
+## Pages
 
-1. Clone the repo and create a virtual environment:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # Windows: .venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
+| | |
+|---|---|
+| Competition index | https://jibion.github.io/kaggle-titanic/ |
+| Titanic data story | https://jibion.github.io/kaggle-titanic/titanic/ |
 
-2. Copy `.env.example` to `.env` and fill in your Kaggle credentials:
-   ```bash
-   cp .env.example .env
-   ```
-
-3. Download competition data:
-   ```bash
-   kaggle competitions download -c titanic -p data/raw/
-   unzip data/raw/titanic.zip -d data/raw/
-   ```
-
-## Workflow
+## Structure
 
 ```
-data/raw/        ← original competition files (gitignored)
-data/processed/  ← cleaned and feature-engineered datasets (gitignored)
-notebooks/       ← exploratory and experimental notebooks
-src/             ← reusable Python modules (feature engineering, training, etc.)
-models/          ← serialized model artifacts (gitignored)
-submissions/     ← generated submission CSVs (gitignored)
+titanic/         ← competition code
+├── data/        ← gitignored; see data/README.md to download
+├── notebooks/   ← EDA and modelling notebooks
+├── src/         ← reusable Python modules
+└── submissions/ ← CSVs named YYYY-MM-DD_model_score.csv
+shared/          ← utilities reused across competitions
+docs/            ← GitHub Pages
+├── index.html   ← competition index
+└── titanic/     ← data story
 ```
-
-1. Explore data in `notebooks/`.
-2. Promote stable logic to `src/`.
-3. Train models, evaluate with cross-validation, save to `models/`.
-4. Generate submission CSV, upload to Kaggle, record results below.
 
 ## Submission Log
 
 | Date | Model | CV Score | LB Score | Notes |
 |------|-------|----------|----------|-------|
 |      |       |          |          |       |
+
+## Setup
+
+```bash
+cd titanic
+python setup_env.py        # creates .venv and installs requirements
+cp ../.env.example ../.env # add your Kaggle API key
+python setup_kaggle.py     # downloads competition data
+```

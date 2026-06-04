@@ -1,11 +1,23 @@
-data/
-data/**/*.csv
+# Kaggle credentials
 .env
-# .env is NOT safe to commit — it contains your Kaggle API key
+
+# Python
 .venv/
 __pycache__/
-*.pkl
+*.pyc
 *.ipynb_checkpoints/
-submissions/
-models/
+
+# Competition data (download via setup_kaggle.py)
+titanic/data/raw/
+titanic/data/processed/
+
+# Model artifacts
+titanic/models/
+
+# Editor
+.vscode/
+
+# Misc
+*.pkl
+titanic_kaggle_roadmap.svg
 text_edits.txt

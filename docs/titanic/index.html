@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RMS Titanic — Data Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ephesis&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/titanic.webp" as="image">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ░░ NAV ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<nav>
+  <a class="nav-logo" href="#hero">RMS Titanic</a>
+  <ul>
+    <li><a href="#ship">The Ship</a></li>
+    <li><a href="#night">The Night</a></li>
+    <li><a href="#eda">The Data</a></li>
+    <li><a href="#patterns">Patterns</a></li>
+  </ul>
+</nav>
+
+<!-- ░░ HERO ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<section id="hero" style="padding:0; max-width:none; margin:0;">
+  <div class="stars"></div>
+
+  <!-- ░ Titanic AI illustration ░ -->
+  <img src="assets/titanic.webp" aria-hidden="true"
+       style="position:absolute;top:10%;pointer-events:none;
+              filter:brightness(0.28) contrast(0.9) blur(0.1px);
+              mix-blend-mode:lighten;opacity:0.42;">
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">April 10 – 15, 1912 &nbsp;·&nbsp; North Atlantic</p>
+    <h1 class="hero-title">RMS <em>Titanic</em></h1>
+    <p class="hero-sub">
+      She was the largest ship ever built — branded unsinkable, bound for New York.
+      On her maiden voyage she met an iceberg, and changed history in 160 minutes.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="h-num" data-count="2224">0</span>
+        <span class="h-label">Souls aboard</span>
+      </div>
+      <div class="hero-stat">
+        <span class="h-num" data-count="1517">0</span>
+        <span class="h-label">Lives lost</span>
+      </div>
+      <div class="hero-stat">
+        <span class="h-num" data-count="710">0</span>
+        <span class="h-label">Survivors</span>
+      </div>
+      <div class="hero-stat">
+        <span class="h-num" data-count="160">0</span>
+        <span class="h-label">Minutes to sink</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue" id="scrollCue" onclick="document.getElementById('ship').scrollIntoView({behavior:'smooth'})">
+    <span class="scroll-label">Scroll to explore</span>
+    <div class="scroll-mouse">
+      <!-- pulsing rings -->
+      <div class="scroll-ring"></div>
+      <div class="scroll-ring"></div>
+      <!-- mouse body -->
+      <svg width="26" height="40" viewBox="0 0 26 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="24" height="38" rx="12" stroke="#c9a84c" stroke-width="1.5"/>
+        <line x1="13" y1="1" x2="13" y2="13" stroke="#c9a84c" stroke-width="1.5"/>
+        <rect class="scroll-wheel" x="10" y="7" width="6" height="8" rx="3" fill="#c9a84c"/>
+      </svg>
+    </div>
+    <!-- cascading chevrons -->
+    <svg class="scroll-chevrons" width="22" height="28" viewBox="0 0 22 28" fill="none">
+      <polyline points="3,2 11,9 19,2"  stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="3,11 11,18 19,11" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="3,20 11,27 19,20" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div class="hero-fade"></div>
+</section>
+
+<div class="section-divider" aria-hidden="true">
+  <div class="div-line"></div>
+  <img src="assets/divider.svg" alt="">
+  <div class="div-line"></div>
+</div>
+
+<!-- ░░ THE SHIP ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<div class="band band--dark" id="ship">
+
+  <!-- ░ Ship deck scene ░ -->
+  <img src="assets/ship-deck.webp" aria-hidden="true" loading="lazy"
+       style="position:absolute;transform:scaleX(-1);width:100%;height:100%;object-fit:cover;pointer-events:none;
+              filter: brightness(0.38) contrast(0.85) blur(0.1px);
+              mix-blend-mode:screen;opacity:0.22;">
+
+  <div class="inner reveal">
+    <p class="label">The Vessel</p>
+    <h2>Built to Last Forever</h2>
+    <div class="rule"></div>
+    <p>
+      RMS Titanic was the second of three Olympic-class ocean liners built by Harland and Wolff
+      in Belfast for the White Star Line. At the time of her launch in 1911, she was the largest
+      moving object ever built by human hands — a floating palace with a swimming pool, Turkish bath,
+      and a first-class dining room that seated 554 guests.
+    </p>
+    <p>
+      Her hull was divided into 16 watertight compartments. Naval architects assured she could stay
+      afloat with any four flooded. The iceberg opened five. Her fate was mathematically sealed
+      within the first hour.
+    </p>
+    <div class="spec-grid reveal-stagger">
+      <div class="spec-card">
+        <span class="spec-val">882 ft</span>
+        <span class="spec-lbl">Length (269 m)</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">46,328</span>
+        <span class="spec-lbl">Gross tonnage</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">21 kn</span>
+        <span class="spec-lbl">Service speed</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">£1.5M</span>
+        <span class="spec-lbl">Cost in 1912</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">3,327</span>
+        <span class="spec-lbl">Max capacity</span>
+      </div>
+      <div class="spec-card">
+        <span class="spec-val">20</span>
+        <span class="spec-lbl">Lifeboats (for ~1,178)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider" aria-hidden="true">
+  <div class="div-line"></div>
+  <img src="assets/divider.svg" alt="">
+  <div class="div-line"></div>
+</div>
+
+<!-- ░░ THE NIGHT ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<div class="band band--dark" id="night">
+
+  <!-- ░ Iceberg ░ -->
+  <img src="assets/iceberg.webp" aria-hidden="true" loading="lazy"
+       style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:100%;width:auto;pointer-events:none;
+              filter:brightness(0.38) contrast(0.95) blur(0.3px);
+              mix-blend-mode:screen;opacity:0.22;">
+
+  <div class="inner">
+    <p class="label reveal">The Night</p>
+    <h2 class="reveal">160 Minutes to the Bottom</h2>
+    <div class="rule reveal"></div>
+    <p class="reveal">
+      April 14, 1912. The North Atlantic was unusually calm — ironically the worst condition for
+      spotting icebergs, as waves breaking at their base would normally reveal them. Six iceberg
+      warnings had been received by radio that day. Captain Smith kept full speed.
+    </p>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-time">April 14 &nbsp;·&nbsp; 11:40 PM</div>
+        <div class="tl-event">Iceberg sighted</div>
+        <div class="tl-detail">Lookout Frederick Fleet rings three bells — "Iceberg, right ahead!" First Officer Murdoch orders hard-a-starboard. The ship begins to turn, but at 21 knots she needs more than half a mile to stop. She doesn't have it.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 14 &nbsp;·&nbsp; 11:50 PM</div>
+        <div class="tl-event">The damage is assessed</div>
+        <div class="tl-detail">Architect Thomas Andrews inspects the lower decks. Five watertight compartments are breached — one more than she can survive with. He tells Captain Smith: she has at most two hours.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 12:05 AM</div>
+        <div class="tl-event">Lifeboats ordered uncovered</div>
+        <div class="tl-detail">Captain Smith orders the crew to prepare lifeboats. There are 20 — enough for 1,178 people. There are 2,224 on board. No one yet believes the ship is truly sinking.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 12:15 AM</div>
+        <div class="tl-event">Distress signals sent</div>
+        <div class="tl-detail">Radio operators Bride and Phillips transmit CQD then SOS. The Carpathia, 58 miles south-east, turns around at full speed. She will arrive in 90 minutes — 10 minutes too late for most.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 12:45 AM</div>
+        <div class="tl-event">First lifeboat lowered</div>
+        <div class="tl-detail">Lifeboat 7 leaves with 28 of its 65 capacity. Passengers refuse to leave the warm, brightly-lit ship for a dark ocean. This pattern repeats for the next 80 minutes.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 2:20 AM</div>
+        <div class="tl-event">Titanic sinks</div>
+        <div class="tl-detail">The stern rises high, the lights go dark, and the ship disappears beneath the surface. Over 1,500 people are in the 28 °F (−2 °C) water. Most will lose consciousness within minutes.</div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-time">April 15 &nbsp;·&nbsp; 4:10 AM</div>
+        <div class="tl-event">Carpathia arrives</div>
+        <div class="tl-detail">RMS Carpathia reaches the lifeboats. 710 survivors are rescued. The search continues until it becomes clear there are none left to find.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider" aria-hidden="true">
+  <div class="div-line"></div>
+  <img src="assets/divider.svg" alt="">
+  <div class="div-line"></div>
+</div>
+
+<!-- ░░ THE DATASET ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<div class="band band--dark" id="eda">
+
+  <!-- ░ Disaster survivors scene ░ -->
+  <img src="assets/survivors.webp" aria-hidden="true" loading="lazy"
+       style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:100%;object-fit:cover;pointer-events:none;
+              filter:brightness(0.538) contrast(0.95) blur(0.1px);
+              mix-blend-mode:screen;opacity:0.22;">
+
+  <div class="inner">
+    <p class="label reveal">Exploratory Data Analysis</p>
+    <h2 class="reveal">891 Stories, One Dataset</h2>
+    <div class="rule reveal"></div>
+    <p class="reveal">
+      The Kaggle Titanic dataset contains records for 891 of the ~2,224 aboard — a curated subset
+      of the ship's manifest, augmented with ticket prices, cabin numbers, and family information.
+      Each row is a person. The target column, <code style="color:var(--gold);font-size:0.9em">Survived</code>,
+      tells us whether they made it. Everything on this page is derived exclusively from the
+      <strong>training set</strong> — the 891 labelled rows Kaggle gives you to learn from.
+      The test set stays sealed: looking at it before prediction would be data leakage, and the
+      whole point of the competition is to generalise to passengers the model has never seen.
+    </p>
+    <p class="reveal">
+      Before building any model, EDA reveals the patterns hiding in the data — and often identifies
+      the most predictive features before a single line of modelling code is written.
+    </p>
+
+    <div class="stat-grid reveal-stagger">
+      <div class="stat-card">
+        <div class="stat-num" data-count="891" data-suffix="">0</div>
+        <div class="stat-lbl">Passengers <br />(training set)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="38" data-suffix="%">0</div>
+        <div class="stat-lbl">Overall survival rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="12" data-suffix="">0</div>
+        <div class="stat-lbl">Features per passenger</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" data-count="177" data-suffix="">0</div>
+        <div class="stat-lbl">Missing age values (20%)</div>
+      </div>
+    </div>
+
+    <!-- missing data bars -->
+    <div style="margin-top:3.5rem" class="reveal">
+      <p class="label">Data quality</p>
+      <h3 style="font-family:'Lora',serif;font-size:1.3rem;margin-bottom:0.5rem;">Missing values by feature</h3>
+      <div class="missing-grid" id="missing-bars">
+        <div class="missing-row">
+          <div class="missing-meta">
+            <span class="missing-feature">Cabin</span>
+            <span class="missing-pct">77.1% missing — 687 of 891</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-w="0.771"></div></div>
+        </div>
+        <div class="missing-row">
+          <div class="missing-meta">
+            <span class="missing-feature">Age</span>
+            <span class="missing-pct">19.9% missing — 177 of 891</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-w="0.199"></div></div>
+        </div>
+        <div class="missing-row">
+          <div class="missing-meta">
+            <span class="missing-feature">Embarked</span>
+            <span class="missing-pct">0.2% missing — 2 of 891</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-w="0.002"></div></div>
+        </div>
+        <div class="missing-row">
+          <div class="missing-meta">
+            <span class="missing-feature">All other features</span>
+            <span class="missing-pct">Complete — 0 missing</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" data-w="0"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider" aria-hidden="true">
+  <div class="div-line"></div>
+  <img src="assets/divider.svg" alt="">
+  <div class="div-line"></div>
+</div>
+
+<!-- ░░ PATTERNS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<div class="band" id="patterns">
+
+
+  <!-- ░░ FLOATING UNDERWATER ELEMENTS (parallax) ░░ -->
+
+  <!-- Sinking figure — large background layer, behind everything -->
+  <div class="sea-float" data-speed="0.08"
+       style="left:0%;top:-2%;width:55%;max-width:780px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.3">
+    <img src="assets/uw-figure.webp" alt="" loading="lazy" style="width:100%;transform:scaleX(-1);
+         filter:brightness(0.38) contrast(0.9) blur(0.1px);">
+  </div>
+
+  <!-- Bubbles — right side, upper area, above debris -->
+  <div class="sea-float" data-speed="0.14"
+       style="right:3%;top:-4%;max-width:600px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.42">
+    <img src="assets/uw-bubbles.webp" alt="" loading="lazy" style="width:100%;
+         filter:brightness(0.40) contrast(0.9) blur(0.4px);">
+  </div>
+
+  <!-- Debris — right side, lower area, below bubbles -->
+  <div class="sea-float" data-speed="0.08"
+       style="right:0%;top:38%;width:66%;max-width:880px;opacity:0;transition:opacity 0.5s;z-index:0;" data-final-opacity="0.22">
+    <img src="assets/uw-debris.webp" alt="" loading="lazy" style="width:100%;
+         filter:brightness(0.30) contrast(0.82) blur(0.5px);">
+  </div>
+
+
+
+  <div class="inner">
+    <p class="label reveal">What the data reveals</p>
+    <h2 class="reveal">Survival Was Not Random</h2>
+    <div class="rule reveal"></div>
+
+    <div class="chart-card reveal" style="margin-bottom:2rem;">
+      <div class="chart-title">Overall — survived vs. lost</div>
+      <canvas id="cOverall"></canvas>
+    </div>
+
+    <div class="insight reveal">
+      <p>
+        Three factors dominate survival in this dataset: <strong>sex</strong>,
+        <strong>ticket class</strong>, and <strong>age</strong>. The "women and children first" 
+        maritime tradition was real — and the class divide was stark. <strong>The starkest finding:</strong> a first-class woman had a <strong>96.8%</strong> chance of
+        survival. A third-class man had a <strong>13.5%</strong> chance. Same ship, same iceberg — a
+        sevenfold difference explained almost entirely by two categorical variables.
+      </p>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card reveal" style="grid-column:1/-1;">
+        <div class="chart-tabs">
+          <button class="ctab ctab-active" data-panel="gender">By Gender</button>
+          <button class="ctab" data-panel="age">By Age Group</button>
+          <button class="ctab" data-panel="class">By Ticket Class</button>
+          <button class="ctab" data-panel="matrix">Class × Gender × Age</button>
+        </div>
+        <div id="panel-gender" class="tab-panel tab-panel-active">
+          <canvas id="cGender"></canvas>
+        </div>
+        <div id="panel-age" class="tab-panel">
+          <canvas id="cAge"></canvas>
+        </div>
+        <div id="panel-class" class="tab-panel">
+          <canvas id="cClass"></canvas>
+        </div>
+        <div id="panel-matrix" class="tab-panel">
+          <canvas id="cMatrix"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight reveal" style="margin-top:2.5rem;">
+      <p>
+        <strong>On the embarkation chart:</strong> Cherbourg passengers survived at a higher rate (55%)
+        not because of any luck related to the port — but because more wealthy first-class passengers
+        boarded there. Port of embarkation is a <em>proxy</em> for class, not a cause.
+        This is the kind of confounding that EDA teaches you to spot before modelling.
+      </p>
+    </div>
+
+    <div class="chart-card reveal" style="margin-top:2rem;">
+      <div class="chart-title">Survival rate by embarkation port</div>
+      <canvas id="cEmbarked"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ░░ FOOTER ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<footer>
+  <p>
+    EDA figures derived from <strong>891 training records</strong> in the
+    <strong>Kaggle Titanic Competition</strong> dataset.
+  </p>
+  <p>
+    Historical facts: <strong>Encyclopedia Titanica</strong> ·
+    British Board of Trade Inquiry (1912) ·
+    National Archives (UK).
+  </p>
+  <p style="margin-top:1rem;font-size:0.72rem;opacity:0.5;">
+    Part of a Kaggle learning project
+  </p>
+</footer>
+
+
+<!-- ░░ SCRIPTS ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+<script src="passengers.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
