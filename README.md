@@ -31,8 +31,10 @@ docs/            ← GitHub Pages
 
 | Date | Model | CV Score | LB Score | Notes |
 |------|-------|----------|----------|-------|
-| 2026-06-05 | Gender baseline (all women survive) | — | 0.76555 | Naive baseline — target to beat |
-| 2021-02-14 | AdaBoost | — | 0.77272 | Previous attempt — current best to beat |
+| 2026-06-06 | XGBoost (100 trees, no deck) | 0.8361 | 0.77700 | Best so far this attempt — target: beat 0.78229 |
+| 2026-06-05 | Gender baseline (all women survive) | — | 0.76555 | Naive baseline |
+| 2021-02-14 | Best previous attempt | — | 0.78229 | **Target to beat** |
+| 2021-02-14 | AdaBoost | — | 0.77272 | Previous attempt |
 | 2021-02-14 | Random Forest | — | 0.76315 | Previous attempt |
 | 2021-02-14 | Random Forest (early) | — | 0.74880 | Previous attempt |
 
