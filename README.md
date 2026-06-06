@@ -9,8 +9,8 @@ Kaggle competition work for the [Titanic — Machine Learning from Disaster](htt
 | Phase | Status | Link |
 |-------|--------|------|
 | 1 — Exploratory Data Analysis | ✅ Done | [Data story](https://jibion.github.io/kaggle-titanic/titanic/) |
-| 2 — Feature Engineering | 🔄 In progress | [Notebook](titanic/notebooks/02_feature_engineering.ipynb) |
-| 3 — Baseline Model | ⬜ Not started | — |
+| 2 — Feature Engineering | ✅ Done | [Notebook](titanic/notebooks/02_feature_engineering.ipynb) |
+| 3 — Baseline Model | 🔄 In progress | — |
 | 4 — Tuning & Submission | ⬜ Not started | — |
 
 ## Structure
