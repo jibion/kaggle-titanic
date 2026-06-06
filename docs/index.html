@@ -128,25 +128,29 @@
       </div>
     </div>
 
-    <div class="phase wip">
+    <div class="phase done">
       <div class="phase-num">3</div>
       <div class="phase-body">
         <div class="phase-header">
           <span class="phase-title">Baseline Model</span>
-          <span class="badge badge-wip">In progress</span>
+          <span class="badge badge-done">Done</span>
         </div>
-        <p class="phase-desc">First submission using logistic regression and a random forest. Establish a CV score baseline before any tuning.</p>
+        <p class="phase-desc">Logistic regression, random forest, and XGBoost evaluated with 5-fold CV. Best: XGBoost CV 0.836 → LB 0.777. Target to beat: 0.782.</p>
+        <div class="phase-links">
+          <a class="link-btn primary" href="https://colab.research.google.com/github/jibion/kaggle-titanic/blob/master/titanic/notebooks/03_baseline.ipynb" target="_blank" rel="noopener">Open in Colab</a>
+          <a class="link-btn secondary" href="https://github.com/jibion/kaggle-titanic/blob/master/titanic/notebooks/03_baseline.ipynb" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
       </div>
     </div>
 
-    <div class="phase todo">
+    <div class="phase wip">
       <div class="phase-num">4</div>
       <div class="phase-body">
         <div class="phase-header">
           <span class="phase-title">Tuning &amp; Submission</span>
-          <span class="badge badge-todo">Not started</span>
+          <span class="badge badge-wip">In progress</span>
         </div>
-        <p class="phase-desc">Hyperparameter search, ensemble methods, and final leaderboard submissions.</p>
+        <p class="phase-desc">Hyperparameter search on XGBoost — learning rate, depth, regularisation. Target: beat 0.782 on the leaderboard.</p>
       </div>
     </div>
 
