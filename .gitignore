@@ -24,6 +24,9 @@ claude.md
 # Scratch notebooks
 titanic/notebooks/scratch_*.ipynb
 
+# Submissions
+titanic/submissions/*.csv
+
 # Misc
 *.pkl
 titanic_kaggle_roadmap.svg
