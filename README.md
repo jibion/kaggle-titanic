@@ -1,5 +1,6 @@
 # Kaggle — Titanic
 
+[![Project Index](https://img.shields.io/badge/Project%20Index-View-c9a84c?style=flat-square)](https://jibion.github.io/kaggle-titanic/)
 [![Data Story](https://img.shields.io/badge/Data%20Story-View-c9a84c?style=flat-square)](https://jibion.github.io/kaggle-titanic/titanic/)
 
 Kaggle competition work for the [Titanic — Machine Learning from Disaster](https://www.kaggle.com/c/titanic) challenge.
