@@ -143,14 +143,18 @@
       </div>
     </div>
 
-    <div class="phase wip">
+    <div class="phase done">
       <div class="phase-num">4</div>
       <div class="phase-body">
         <div class="phase-header">
           <span class="phase-title">Tuning &amp; Submission</span>
-          <span class="badge badge-wip">In progress</span>
+          <span class="badge badge-done">Done</span>
         </div>
-        <p class="phase-desc">Hyperparameter search on XGBoost — learning rate, depth, regularisation. Target: beat 0.782 on the leaderboard.</p>
+        <p class="phase-desc">RandomizedSearchCV across 9 XGBoost parameters. Key finding: hyperparameter search overfit on 891 samples — CV improved but LB dropped. Best result: Phase 3 baseline at LB 0.777.</p>
+        <div class="phase-links">
+          <a class="link-btn primary" href="https://colab.research.google.com/github/jibion/kaggle-titanic/blob/master/titanic/notebooks/04_tuning.ipynb" target="_blank" rel="noopener">Open in Colab</a>
+          <a class="link-btn secondary" href="https://github.com/jibion/kaggle-titanic/blob/master/titanic/notebooks/04_tuning.ipynb" target="_blank" rel="noopener">View on GitHub</a>
+        </div>
       </div>
     </div>
 

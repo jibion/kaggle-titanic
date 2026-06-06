@@ -12,7 +12,7 @@ Kaggle competition work for the [Titanic — Machine Learning from Disaster](htt
 | 1 — Exploratory Data Analysis | ✅ Done | [Data story](https://jibion.github.io/kaggle-titanic/titanic/) |
 | 2 — Feature Engineering | ✅ Done | [Notebook](titanic/notebooks/02_feature_engineering.ipynb) |
 | 3 — Baseline Model | ✅ Done | [Notebook](titanic/notebooks/03_baseline.ipynb) |
-| 4 — Tuning & Submission | 🔄 In progress | — |
+| 4 — Tuning & Submission | ✅ Done | [Notebook](titanic/notebooks/04_tuning.ipynb) |
 
 ## Structure
 
@@ -31,9 +31,10 @@ docs/            ← GitHub Pages
 
 | Date | Model | CV Score | LB Score | Notes |
 |------|-------|----------|----------|-------|
-| 2026-06-06 | XGBoost (100 trees, no deck) | 0.8361 | 0.77700 | Best so far this attempt — target: beat 0.78229 |
+| 2026-06-06 | XGBoost (100 trees, no deck) | 0.8361 | **0.77700** | ✅ Best this attempt |
+| 2026-06-06 | XGBoost tuned (RandomizedSearchCV) | 0.8474 | 0.75837 | ❌ Hyperparameter overfitting — CV up, LB down |
 | 2026-06-05 | Gender baseline (all women survive) | — | 0.76555 | Naive baseline |
-| 2021-02-14 | Best previous attempt | — | 0.78229 | **Target to beat** |
+| 2021-02-14 | Best previous attempt | — | 0.78229 | Target (not beaten) |
 | 2021-02-14 | AdaBoost | — | 0.77272 | Previous attempt |
 | 2021-02-14 | Random Forest | — | 0.76315 | Previous attempt |
 | 2021-02-14 | Random Forest (early) | — | 0.74880 | Previous attempt |
